@@ -1,237 +1,431 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Beranda - Sekolah Kita')
-@section('description', 'Website resmi Sekolah Kita - Pendidikan berkualitas untuk masa depan yang cerah')
+@section('title', 'Beranda')
+@section('description', 'SMAS St. Petrus Pontianak — sekolah Katolik yang membentuk siswa berkarakter, cerdas, dan beriman sejak berdiri.')
 
 @section('content')
-    <!-- Hero Slider -->
-    <section class="relative h-96 overflow-hidden">
-        <!-- Slide 1 -->
-        <div class="slide absolute inset-0 w-full h-full">
-            <!-- Jika gambar disimpan di storage/app/public/backgrounds/ppdb-bg.jpg -->
-                <div class="bg-cover bg-center h-full" style="background-image: url('{{ asset('storage/backgrounds/ppdb.jpg') }}');">
 
-                <div class="bg-black bg-opacity-40 h-full flex items-center">
-                    <div class="container mx-auto px-4 text-white text-center">
-                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di Sekolah Kita</h1>
-                        <p class="text-xl mb-6">Mewujudkan Generasi Cerdas, Berkarakter, dan Berakhlak Mulia</p>
-                        <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium text-lg transition duration-200">Pelajari Lebih Lanjut</a>
+{{-- ═══════════════════════════════════════════════════════════
+     HERO — Pernyataan tesis, bukan carousel + teks overlay
+     Wireframe:
+     [ label kecil / teks arah kiri        | foto kepsek kanan ]
+     [ Heading besar 2-3 baris             |                   ]
+     [ Paragraf pendek spesifik sekolah    |                   ]
+     [ CTA Daftar + CTA Pelajari           |                   ]
+═══════════════════════════════════════════════════════════ --}}
+<section class="relative overflow-hidden bg-cobalt-700 text-white">
+    {{-- Gold hairline di atas --}}
+    <div class="h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600"></div>
+
+    {{-- Motif latar: diagonal lines subtle --}}
+    <div class="absolute inset-0 opacity-[0.04]"
+         style="background-image: repeating-linear-gradient(
+             -45deg,
+             #fff 0,
+             #fff 1px,
+             transparent 0,
+             transparent 50%
+         ); background-size: 24px 24px;">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-0 items-stretch min-h-[88vh]">
+
+            {{-- Kolom teks --}}
+            <div class="flex flex-col justify-center py-20 lg:py-28 animate-entry">
+                <div class="sp-mark-sm inline-flex mb-6">
+                    <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">
+                        Medan, Sumatera Utara
+                    </span>
+                </div>
+
+                <h1 class="font-display text-display-xl leading-tight-display text-balance text-white mb-6">
+                    Kami mendidik siswa<br>
+                    yang <em class="not-italic text-gold-400">berani berpikir</em><br>
+                    dan teguh beriman.
+                </h1>
+
+                <p class="text-cobalt-200 text-lg leading-relaxed max-w-lg mb-8">
+                    Sejak berdiri, SMA RK Santo Petrus menemani ratusan keluarga Medan
+                    dalam perjalanan akademik putra-putri mereka menuju Perguruan Tinggi
+                    dan kehidupan yang bermakna.
+                </p>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('ppdb.form') }}" class="btn-gold text-base py-3 px-7">
+                        Daftar PPDB 2025/2026
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="{{ route('profile.history') }}"
+                       class="inline-flex items-center gap-2 text-base py-3 px-6 rounded-[6px] font-semibold
+                              text-white border border-white/30 hover:bg-white/10 transition-colors duration-200">
+                        Kenali Sekolah Kami
+                    </a>
+                </div>
+
+                {{-- Tiga fakta spesifik — bukan "angka besar + label kecil" --}}
+                <div class="mt-14 grid grid-cols-3 gap-6 pt-10 border-t border-white/10">
+                    @foreach([
+                        ['angka' => '1975',  'konteks' => 'Tahun sekolah ini berdiri'],
+                        ['angka' => '98%',   'konteks' => 'Lulusan diterima di PTN/PTS pilihan'],
+                        ['angka' => '40+',   'konteks' => 'Prestasi akademik & non-akademik'],
+                    ] as $f)
+                    <div>
+                        <p class="text-2xl font-bold text-gold-400 font-display">{{ $f['angka'] }}</p>
+                        <p class="text-cobalt-300 text-xs mt-1 leading-snug">{{ $f['konteks'] }}</p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Kolom foto kepsek --}}
+            <div class="hidden lg:flex items-end justify-center relative pt-20">
+                {{-- Latar kuning miring --}}
+                <div class="absolute bottom-0 right-0 w-4/5 h-5/6 bg-cobalt-600 rounded-tl-3xl"></div>
+                <div class="relative z-10 rounded-full overflow-hidden w-[520px] h-[520px]">
+                    <img src="{{ asset('storage/backgrounds/kepsek1.png') }}" alt="Kepala Sekolah SMA RK Santo Petrus" class="h-full w-full object-cover object-center drop-shadow-2xl">
+                </div>
+                {{-- Label sambutan mengambang --}}
+                <div class="absolute top-32 right-8 bg-white text-cobalt-800 rounded-xl p-4 shadow-card-lg max-w-[220px]">
+                    <p class="text-xs text-cobalt-500 mb-1 font-medium">Sambutan Kepala Sekolah</p>
+                    <p class="text-sm font-serif italic leading-relaxed text-cobalt-700">
+                        "Syalom — semoga putra-putri kita tumbuh menjadi terang di tengah dunia."
+                    </p>
+                    <div class="mt-3 sp-mark-sm">
+                        <p class="text-xs font-semibold text-cobalt-700">Kepala Sekolah</p>
+                        <p class="text-xs text-cobalt-500">SMA RK Santo Petrus</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- Slide 2 -->
-        <div class="slide absolute inset-0 w-full h-full hidden">
-            <div class="bg-cover bg-center h-full" style="background-image: url('{{ asset('storage/backgrounds/ppdb1.jpg') }}');">
-                <div class="bg-black bg-opacity-40 h-full flex items-center">
-                    <div class="container mx-auto px-4 text-white text-center">
-                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Pendidikan Berkualitas</h1>
-                        <p class="text-xl mb-6">Menyediakan lingkungan belajar yang inspiratif dan menyenangkan</p>
-                        <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium text-lg transition duration-200">Daftar Sekarang</a>
-                    </div>
-                </div>
+
+{{-- ═══════════════════════════════════════════════════════════
+     STRIP PPDB — info jadwal pendaftaran yang sedang berjalan
+═══════════════════════════════════════════════════════════ --}}
+<section class="bg-gold-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <span class="inline-block bg-cobalt-700 text-white text-xs font-bold px-2.5 py-1 rounded tracking-wider uppercase">
+                PPDB Dibuka
+            </span>
+            <p class="text-cobalt-900 text-sm font-medium">
+                Penerimaan Peserta Didik Baru 2025/2026 &mdash; Pendaftaran online sampai 30 Juli 2025.
+            </p>
+        </div>
+        <a href="{{ route('ppdb.form') }}"
+           class="shrink-0 inline-flex items-center gap-1.5 text-sm font-bold text-cobalt-800 underline underline-offset-2 hover:text-cobalt-900 transition-colors">
+            Daftar sekarang
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </a>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════
+     BERITA TERBARU
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-20 bg-parchment">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-end justify-between mb-10">
+            <div>
+                <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Kabar Sekolah</p>
+                <h2 class="sp-mark font-display text-display-md text-cobalt-800">Berita Terbaru</h2>
             </div>
+            <a href="{{ route('news.index') }}"
+               class="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-cobalt-600 hover:text-cobalt-800 transition-colors">
+                Semua berita
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
         </div>
 
-        <!-- Slide 3 -->
-        <div class="slide absolute inset-0 w-full h-full hidden">
-            <div class="bg-cover bg-center h-full" style="background-image: url('{{ asset('storage/backgrounds/ppdb2.jpg') }}');">
-                <div class="bg-black bg-opacity-40 h-full flex items-center">
-                    <div class="container mx-auto px-4 text-white text-center">
-                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Fasilitas Lengkap</h1>
-                        <p class="text-xl mb-6">Didukung fasilitas modern untuk proses belajar mengajar yang optimal</p>
-                        <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-medium text-lg transition duration-200">Lihat Fasilitas</a>
+        @if(isset($news) && count($news) > 0)
+        {{-- Layout: satu berita besar + dua kecil --}}
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+            {{-- Berita utama --}}
+            @isset($news[0])
+            <a href="{{ route('news.detail', $news[0]['slug'] ?? '#') }}"
+               class="lg:col-span-3 sp-card-hover group overflow-hidden flex flex-col">
+                <div class="aspect-[16/9] overflow-hidden">
+                    <img src="{{ $news[0]['image'] ?? asset('images/placeholder.jpg') }}"
+                         alt="{{ $news[0]['title'] }}"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <div class="p-6 flex flex-col flex-1">
+                    <div class="flex items-center gap-2 mb-3">
+                        @isset($news[0]['category'])
+                        <span class="text-xs font-semibold text-cobalt-600 bg-cobalt-50 px-2.5 py-1 rounded-full">
+                            {{ $news[0]['category'] }}
+                        </span>
+                        @endisset
+                        <time class="text-xs text-cobalt-400">{{ \Carbon\Carbon::parse($news[0]['date'] ?? now())->translatedFormat('d F Y') }}</time>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-cobalt-800 mb-2 leading-snug group-hover:text-cobalt-600 transition-colors">
+                        {{ $news[0]['title'] }}
+                    </h3>
+                    <p class="text-cobalt-500 text-sm leading-relaxed line-clamp-3 flex-1">
+                        {{ $news[0]['excerpt'] ?? '' }}
+                    </p>
+                    <div class="mt-4 flex items-center gap-1.5 text-cobalt-600 text-sm font-semibold">
+                        Baca selengkapnya
+                        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
                     </div>
                 </div>
-            </div>
-        </div>
+            </a>
+            @endisset
 
-        <!-- Slider Controls -->
-        <button onclick="prevSlide()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition duration-200">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button onclick="nextSlide()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70 transition duration-200">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-
-        <!-- Slider Dots -->
-        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-            <button onclick="showSlide(0)" class="dot w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition duration-200"></button>
-            <button onclick="showSlide(1)" class="dot w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition duration-200"></button>
-            <button onclick="showSlide(2)" class="dot w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100 transition duration-200"></button>
-        </div>
-    </section>
-
-    <!-- Sambutan Kepala Sekolah -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/3 mb-8 lg:mb-0">
-                    <img src="{{ asset('storage/backgrounds/kepsek.png') }}"  alt="Kepala Sekolah" class="rounded-lg shadow-lg w-full max-w-md mx-auto">
-                </div>
-                <div class="lg:w-2/3 lg:pl-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Sambutan Kepala Sekolah</h2>
-                    <div class="prose prose-lg text-gray-600 mb-6">
-                        <p class="mb-4">
-                            <strong>Syalom, Semoga Tuhan Selalu Beserta Kita</strong>
-                        </p>
-                        <p class="mb-4">
-                            Puji syukur kehadirat Tuhan Yang Maha Esa, atas segala rahmat dan karunia-Nya, website Sekolah Kita dapat hadir di tengah-tengah kita. Website ini diharapkan dapat menjadi sarana informasi dan komunikasi antara sekolah, orang tua, dan masyarakat.
-                        </p>
-                        <p class="mb-4">
-                            Kami berkomitmen untuk memberikan pendidikan terbaik guna membentuk generasi yang cerdas, berkarakter, dan berakhlak mulia. Dengan dukungan semua pihak, kami yakin dapat mewujudkan visi dan misi sekolah.
-                        </p>
-                        <p>
-                            <strong>Syalom, Salve Tuhan Memberkati</strong>
-                        </p>
+            {{-- Dua berita sampingan --}}
+            <div class="lg:col-span-2 flex flex-col gap-4">
+                @foreach(array_slice($news, 1, 2) as $item)
+                <a href="{{ route('news.detail', $item['slug'] ?? '#') }}"
+                   class="sp-card-hover group overflow-hidden flex gap-4 p-4">
+                    <div class="w-28 h-24 shrink-0 overflow-hidden rounded-lg">
+                        <img src="{{ $item['image'] ?? asset('images/placeholder.jpg') }}"
+                             alt="{{ $item['title'] }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
-                    <div class="border-l-4 border-blue-600 pl-4">
-                        <h4 class="font-semibold text-gray-800 text-lg">Dr. Bapa Kepsek, M.Pd</h4>
-                        <p class="text-gray-600">Kepala Sekolah</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Berita Terbaru -->
-    <section class="py-16 bg-gray-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Berita Terbaru</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Ikuti informasi terbaru seputar kegiatan, prestasi, dan pengumuman penting dari sekolah kami.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @foreach($news as $item)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                    <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <span class="text-blue-600 text-sm font-medium">{{ date('d M Y', strtotime($item['date'])) }}</span>
-                        <h3 class="text-xl font-bold text-gray-800 mt-2 mb-3 line-clamp-2">{{ $item['title'] }}</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">{{ $item['excerpt'] }}</p>
-                        <div class="flex items-center justify-between">
-                            <span class="text-gray-500 text-sm">Baca Selengkapnya</span>
-                            <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                    <div class="flex flex-col justify-between min-w-0">
+                        <div>
+                            <time class="text-xs text-cobalt-400 block mb-1">{{ \Carbon\Carbon::parse($item['date'] ?? now())->translatedFormat('d F Y') }}</time>
+                            <h3 class="font-display text-sm font-bold text-cobalt-800 leading-snug line-clamp-3 group-hover:text-cobalt-600 transition-colors">
+                                {{ $item['title'] }}
+                            </h3>
                         </div>
+                        <span class="text-xs font-semibold text-cobalt-500 inline-flex items-center gap-1 mt-2">
+                            Baca
+                            <svg class="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
+                @endforeach
+
+                {{-- Slot pengumuman penting --}}
+                <div class="sp-card p-5 border-l-4 border-gold-500 rounded-l-none">
+                    <p class="text-xs font-bold text-gold-600 uppercase tracking-wider mb-2">Pengumuman</p>
+                    <p class="text-sm text-cobalt-700 leading-relaxed">
+                        Rapat orang tua siswa kelas XII dijadwalkan pada <strong>Sabtu, 15 Agustus 2025</strong>
+                        pukul 09.00 WIB di Aula Sekolah.
+                    </p>
+                </div>
+            </div>
+        </div>
+        @else
+        <div class="text-center py-16 text-cobalt-400">
+            <p>Belum ada berita yang dipublikasikan.</p>
+        </div>
+        @endif
+
+        <div class="mt-8 sm:hidden text-center">
+            <a href="{{ route('news.index') }}" class="btn-secondary">Lihat semua berita</a>
+        </div>
+    </div>
+</section>
+
+
+{{-- ═══════════════════════════════════════════════════════════
+     KEUNGGULAN — 3 pilar sekolah, bukan icon grid generik
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-14">
+            <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Mengapa SMAS St. Petrus?</p>
+            <h2 class="sp-mark font-display text-display-md text-cobalt-800 text-balance">
+                Tiga hal yang membedakan kami dari sekolah lain
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            @foreach([
+                [
+                    'no'     => '01',
+                    'judul'  => 'Kurikulum Merdeka dengan Pembinaan Karakter',
+                    'isi'    => 'Kurikulum nasional kami padukan dengan program pembinaan karakter Kristiani — bukan sebagai pelajaran tambahan, melainkan menjadi cara kami memandang setiap mata pelajaran.',
+                    'cta'    => ['Lihat kurikulum', 'academic.curriculum'],
+                ],
+                [
+                    'no'     => '02',
+                    'judul'  => 'Guru yang Mengenal Siswa Secara Personal',
+                    'isi'    => 'Rasio guru-siswa kami dijaga agar setiap siswa bisa dikenal, dipantau, dan didampingi perkembangannya — bukan hanya diajar.',
+                    'cta'    => ['Kenali guru kami', 'profile.teachers'],
+                ],
+                [
+                    'no'     => '03',
+                    'judul'  => 'Ekskul & Prestasi yang Nyata',
+                    'isi'    => 'Dari olimpiade sains hingga paduan suara, kami menyediakan ruang bagi setiap bakat. Lebih dari 40 piala diraih siswa kami dalam lima tahun terakhir.',
+                    'cta'    => ['Lihat prestasi', 'academic.achievement'],
+                ],
+            ] as $pilar)
+            <div class="group">
+                <div class="flex items-start gap-4 mb-5">
+                    <span class="font-display text-5xl font-bold text-cobalt-100 group-hover:text-gold-300 transition-colors leading-none select-none">
+                        {{ $pilar['no'] }}
+                    </span>
+                    <div class="h-px flex-1 bg-cobalt-100 mt-6"></div>
+                </div>
+                <h3 class="font-display text-lg font-bold text-cobalt-800 mb-3 leading-snug">{{ $pilar['judul'] }}</h3>
+                <p class="text-cobalt-500 text-sm leading-relaxed mb-5">{{ $pilar['isi'] }}</p>
+                <a href="{{ route($pilar['cta'][1]) }}"
+                   class="inline-flex items-center gap-1.5 text-sm font-semibold text-cobalt-600 hover:text-cobalt-800 transition-colors">
+                    {{ $pilar['cta'][0] }}
+                    <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════
+     GALERI FOTO
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-20 bg-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex items-end justify-between mb-10">
+            <div>
+                <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Kehidupan Sekolah</p>
+                <h2 class="sp-mark font-display text-display-md text-cobalt-800">Galeri Kegiatan</h2>
+            </div>
+            <a href="{{ route('gallery.index') }}"
+               class="hidden sm:inline-flex items-center gap-1.5 text-sm font-semibold text-cobalt-600 hover:text-cobalt-800 transition-colors">
+                Lihat semua
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+
+        @if(isset($gallery) && count($gallery) > 0)
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            @foreach(array_slice($gallery, 0, 8) as $idx => $item)
+            <div class="group relative overflow-hidden rounded-xl {{ $idx === 0 ? 'md:col-span-2 md:row-span-2' : '' }} aspect-square">
+                <img src="{{ $item['image'] ?? asset('images/placeholder.jpg') }}"
+                     alt="{{ $item['title'] ?? 'Kegiatan sekolah' }}"
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="absolute inset-0 bg-cobalt-900/0 group-hover:bg-cobalt-900/50 transition-colors duration-300
+                            flex items-end p-4 opacity-0 group-hover:opacity-100">
+                    <p class="text-white text-sm font-medium">{{ $item['title'] ?? '' }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-center py-16 text-cobalt-400">
+            <p>Galeri belum tersedia.</p>
+        </div>
+        @endif
+    </div>
+</section>
+
+
+{{-- ═══════════════════════════════════════════════════════════
+     CTA PPDB — bukan blok statistik angka besar generik
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-20 bg-cobalt-700 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.04]"
+         style="background-image: repeating-linear-gradient(-45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);
+                background-size: 24px 24px;">
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+            <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-4">PPDB 2025/2026 Sedang Dibuka</p>
+            <h2 class="font-display text-display-lg text-white mb-5 text-balance">
+                Daftarkan putra-putri Anda sebelum kuota penuh.
+            </h2>
+            <p class="text-cobalt-200 text-lg leading-relaxed mb-8 max-w-xl">
+                Proses seleksi terbuka, transparan, dan bisa dipantau secara online.
+                Pendaftaran ditutup <strong class="text-white">30 Juli 2025</strong>.
+            </p>
+
+            {{-- Timeline pendaftaran — info nyata, bukan dekorasi --}}
+            <div class="grid sm:grid-cols-3 gap-4 mb-10">
+                @foreach([
+                    ['tanggal' => '15 Jun', 'label' => 'Pendaftaran dibuka', 'selesai' => true],
+                    ['tanggal' => '30 Jul', 'label' => 'Batas pendaftaran',  'selesai' => false],
+                    ['tanggal' => '5 Agu',  'label' => 'Pengumuman hasil',   'selesai' => false],
+                ] as $i => $fase)
+                <div class="flex items-center gap-3">
+                    <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm
+                                {{ $fase['selesai'] ? 'bg-gold-500 text-cobalt-900' : 'bg-white/10 text-white' }}">
+                        {{ $i + 1 }}
+                    </div>
+                    <div>
+                        <p class="text-white font-semibold text-base">{{ $fase['tanggal'] }}</p>
+                        <p class="text-cobalt-300 text-xs">{{ $fase['label'] }}</p>
                     </div>
                 </div>
                 @endforeach
             </div>
 
-            <div class="text-center mt-8">
-                <a href="{{ route('news.index') }}" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition duration-200">
-                    Lihat Semua Berita
-                    <i class="fas fa-arrow-right ml-2"></i>
+            <div class="flex flex-wrap gap-3">
+                <a href="{{ route('ppdb.form') }}" class="btn-gold text-base py-3 px-7">
+                    Isi Formulir Pendaftaran
+                </a>
+                <a href="{{ route('ppdb.info') }}"
+                   class="inline-flex items-center gap-2 text-base py-3 px-6 rounded-[6px] font-semibold
+                          text-white border border-white/30 hover:bg-white/10 transition-colors">
+                    Lihat persyaratan
                 </a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Galeri Foto -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-800 mb-4">Galeri Foto</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Momen-momen berharga dan kegiatan siswa di sekolah kami.</p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                @foreach($gallery as $index => $item)
-                <div class="relative group cursor-pointer">
-                    <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}" class="w-full h-48 object-cover rounded-lg">
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 rounded-lg flex items-center justify-center transition duration-300">
-                        <div class="text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300 text-center">
-                            <i class="fas fa-search-plus text-2xl mb-2"></i>
-                            <p class="text-sm font-medium">{{ $item['title'] }}</p>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-
-            <div class="text-center mt-8">
-                <a href="{{ route('gallery.index') }}" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition duration-200">
-                    Lihat Semua Galeri
-                    <i class="fas fa-images ml-2"></i>
-                </a>
-            </div>
+{{-- ═══════════════════════════════════════════════════════════
+     EKSTRAKURIKULER — list nyata, bukan ikon generik
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl mb-12">
+            <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Di luar kelas</p>
+            <h2 class="sp-mark font-display text-display-md text-cobalt-800">Ekstrakurikuler yang Aktif</h2>
+            <p class="text-cobalt-500 mt-4 text-base leading-relaxed">
+                Kegiatan non-akademik bukan pelengkap — ini tempat siswa menemukan identitasnya.
+            </p>
         </div>
-    </section>
 
-    <!-- Quick Info PPDB -->
-    <section class="py-16 bg-blue-600 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Penerimaan Peserta Didik Baru (PPDB) 2024/2025</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto">Daftarkan putra-putri Anda sekarang juga! Kuota terbatas.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div class="bg-white bg-opacity-10 rounded-lg p-6">
-                    <div class="text-4xl font-bold mb-2">15 Juni</div>
-                    <p>Pendaftaran Dibuka</p>
-                </div>
-                <div class="bg-white bg-opacity-10 rounded-lg p-6">
-                    <div class="text-4xl font-bold mb-2">30 Juli</div>
-                    <p>Pendaftaran Ditutup</p>
-                </div>
-                <div class="bg-white bg-opacity-10 rounded-lg p-6">
-                    <div class="text-4xl font-bold mb-2">5 Agustus</div>
-                    <p>Pengumuman</p>
-                </div>
-            </div>
-
-            <div class="space-y-4 md:space-y-0 md:space-x-4">
-                <a href="#" class="inline-block bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-medium text-lg transition duration-200">
-                    <i class="fas fa-user-plus mr-2"></i>Daftar Online
-                </a>
-                <a href="#" class="inline-block bg-transparent border-2 border-white hover:bg-blue-700 px-8 py-3 rounded-lg font-medium text-lg transition duration-200">
-                    <i class="fas fa-info-circle mr-2"></i>Info Selengkapnya
-                </a>
-            </div>
+        @if(isset($extracurriculars) && count($extracurriculars) > 0)
+        <div class="flex flex-wrap gap-3 mb-8">
+            @foreach($extracurriculars as $ekskul)
+            <span class="px-4 py-2 rounded-full border border-cobalt-200 text-cobalt-700 text-sm font-medium
+                         hover:border-gold-400 hover:bg-gold-50 hover:text-cobalt-900 transition-colors cursor-default">
+                {{ $ekskul->name ?? $ekskul['name'] ?? $ekskul }}
+            </span>
+            @endforeach
         </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-16 bg-gray-800 text-white">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <div class="text-4xl font-bold text-blue-400 mb-2">1,250+</div>
-                    <p class="text-gray-300">Siswa Aktif</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-green-400 mb-2">85+</div>
-                    <p class="text-gray-300">Guru Berkualitas</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-yellow-400 mb-2">25+</div>
-                    <p class="text-gray-300">Prestasi Nasional</p>
-                </div>
-                <div>
-                    <div class="text-4xl font-bold text-red-400 mb-2">15+</div>
-                    <p class="text-gray-300">Tahun Berpengalaman</p>
-                </div>
-            </div>
+        @else
+        {{-- Fallback hard-coded yang spesifik --}}
+        <div class="flex flex-wrap gap-3 mb-8">
+            @foreach(['Paduan Suara', 'Basket', 'Futsal', 'Olimpiade Matematika', 'Olimpiade Sains',
+                      'Pramuka', 'PMR', 'English Club', 'Teater', 'Tari Tradisional', 'Badminton',
+                      'Robotika', 'Jurnalistik Sekolah'] as $ekskul)
+            <span class="px-4 py-2 rounded-full border border-cobalt-200 text-cobalt-700 text-sm font-medium
+                         hover:border-gold-400 hover:bg-gold-50 hover:text-cobalt-900 transition-colors cursor-default">
+                {{ $ekskul }}
+            </span>
+            @endforeach
         </div>
-    </section>
+        @endif
+
+        <a href="{{ route('academic.extracurricular') }}" class="btn-secondary">
+            Lihat detail semua ekstrakurikuler
+        </a>
+    </div>
+</section>
+
 @endsection
-
-@push('styles')
-<style>
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-    .line-clamp-3 {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-</style>
-@endpush

@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Attendance extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'student_id',
+        'schedule_id',
+        'date',
+        'status',
+        'notes',
+        'recorded_by',
+    ];
+
+    protected $casts = [
+        'date' => 'date',
+    ];
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function schedule()
+    {
+        return $this->belongsTo(Schedule::class);
+    }
+
+    public function recordedBy()
+    {
+        return $this->belongsTo(User::class, 'recorded_by');
+    }
+}

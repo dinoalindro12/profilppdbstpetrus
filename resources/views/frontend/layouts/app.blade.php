@@ -1,310 +1,373 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Sekolah Kita') - Website Resmi</title>
-    <meta name="description" content="@yield('description', 'Website resmi Sekolah Kita - Pendidikan Berkualitas untuk Generasi Unggul')">
+    <title>@yield('title', 'SMAS St. Petrus') — Sekolah Menengah Atas Swasta Santo Petrus</title>
+    <meta name="description" content="@yield('description', 'SMAS St. Petrus — sekolah Katolik di Pontianak yang mendidik siswa menjadi pribadi berkarakter, cerdas, dan beriman.')">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+
+    {{-- Icon set: Heroicons via CDN (konsisten, tidak butuh FA) --}}
+    <script src="https://unpkg.com/@heroicons/v1/outline/index.js" defer></script>
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo -->
-                <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                        <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo Sekolah" class="h-8 w-auto">
-                    </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-gray-800">SMAS ST. Petrus</h1>
-                        <p class="text-xs text-gray-600">Sekolah Unggulan Terpercaya</p>
-                    </div>
+<body class="bg-parchment text-ink antialiased">
+
+{{-- ─── Navbar ─────────────────────────────────────────────────────────── --}}
+<header
+    class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200"
+    x-data="{ open: false, profil: false, akademik: false, ppdb: false }"
+    @keydown.escape.window="open = false; profil = false; akademik = false; ppdb = false"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+
+            {{-- Logo --}}
+            <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0 group">
+                <div class="w-9 h-9 rounded-md overflow-hidden border border-cobalt-100">
+                    <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo SMAS St. Petrus"
+                         class="w-full h-full object-contain p-0.5">
                 </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600 font-medium {{ request()->routeIs('home') ? 'text-blue-600 border-b-2 border-blue-600' : '' }}">Beranda</a>
-                    
-                    <!-- Profil Dropdown -->
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 font-medium flex items-center focus:outline-none">
-                            Profil
-                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="{{ route('profile.history') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Sejarah</a>
-                            <a href="{{ route('profile.vision-mission') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Visi & Misi</a>
-                            <a href="{{ route('profile.teachers') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Guru</a>
-                            <a href="{{ route('profile.staff') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Staf</a>
-                            <a href="{{ route('profile.facilities') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Fasilitas</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Akademik Dropdown -->
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 font-medium flex items-center focus:outline-none">
-                            Akademik
-                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="{{ route('academic.curriculum') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Kurikulum</a>
-                            <a href="{{ route('academic.extracurricular') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Ekstrakurikuler</a>
-                            <a href="{{ route('academic.achievement') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Prestasi</a>
-                            <a href="{{ route('academic-calendars.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Kalender Akademik</a>
-                        </div>
-                    </div>
-                    <!-- PPDB Dropdown -->
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 font-medium flex items-center focus:outline-none">
-                            PPDB
-                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="{{ route('ppdb.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">PPDB</a>
-                            <a href="{{ route('ppdb.info') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Informasi PPDB</a>
-                            <a href="{{ route('ppdb.form') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Daftar</a>
-                        </div>
-                    </div>
-
-                    <div class="relative group">
-                        <button class="text-gray-700 hover:text-blue-600 font-medium flex items-center focus:outline-none">
-                            Galeri
-                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
-                        </button>
-                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                            <a href="{{ route('gallery.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Galeri Harian</a>
-                            <a href="{{ route('ppdb.info') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Galeri Alumni</a>
-                            <a href="{{ route('ppdb.form') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600">Galeri Guru</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Menu Lainnya -->
-                    <a href="{{ route('news.index') }}" class="text-gray-700 hover:text-blue-600 font-medium {{ request()->routeIs('news.*') ? 'text-blue-600 border-b-2 border-blue-600' : '' }}">Berita</a>
-                    <a href="{{ route('contact.contact') }}" class="text-gray-700 hover:text-blue-600 font-medium {{ request()->routeIs('contact.*') ? 'text-blue-600 border-b-2 border-blue-600' : '' }}">Kontak</a>
-                    
-                    <!-- Login Button -->
-                    <a href="{{ route('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">Login Admin</a>
+                <div class="leading-none">
+                    <span class="block text-[0.9375rem] font-bold text-cobalt-700 tracking-tight">SMAS St. Petrus</span>
+                    <span class="block text-[0.6875rem] font-medium text-cobalt-400 tracking-widest uppercase mt-0.5">Medan</span>
                 </div>
+            </a>
 
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" id="mobile-menu-button" class="text-gray-700 hover:text-blue-600 focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            {{-- Desktop nav --}}
+            <nav class="hidden lg:flex items-center gap-1">
+                <a href="{{ route('home') }}"
+                   class="nav-link px-3 {{ request()->routeIs('home') ? 'active' : '' }}">
+                    Beranda
+                </a>
+
+                {{-- Profil dropdown --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="nav-link px-3 flex items-center gap-1
+                                   {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                        Profil
+                        <svg :class="open ? 'rotate-180' : ''" class="w-3.5 h-3.5 transition-transform duration-150"
+                             fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
-                </div>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="md:hidden hidden pb-4 border-t border-gray-200 mt-4">
-                <div class="flex flex-col space-y-3 mt-4">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600 font-medium py-2 {{ request()->routeIs('home') ? 'text-blue-600' : '' }}">Beranda</a>
-                    
-                    <!-- Profil Mobile -->
-                    <div class="border-l-2 border-blue-100 pl-4">
-                        <button type="button" class="mobile-dropdown-toggle text-gray-700 hover:text-blue-600 font-medium py-2 flex items-center justify-between w-full">
-                            <span>Profil</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2 space-y-2">
-                            <a href="{{ route('profile.history') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Sejarah</a>
-                            <a href="{{ route('profile.vision-mission') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Visi & Misi</a>
-                            <a href="{{ route('profile.teachers') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Guru</a>
-                            <a href="{{ route('profile.staff') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Staf</a>
-                            <a href="{{ route('profile.facilities') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Fasilitas</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Akademik Mobile -->
-                    <div class="border-l-2 border-blue-100 pl-4">
-                        <button type="button" class="mobile-dropdown-toggle text-gray-700 hover:text-blue-600 font-medium py-2 flex items-center justify-between w-full">
-                            <span>Akademik</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2 space-y-2">
-                            <a href="{{ route('academic.curriculum') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Kurikulum</a>
-                            <a href="{{ route('academic.extracurricular') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Ekstrakurikuler</a>
-                            <a href="{{ route('academic.achievement') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Prestasi</a>
-                            <a href="{{ route('academic-calendars.index') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Prestasi</a>
-                        </div>
-                    </div>
-
-                    <div class="border-l-2 border-blue-100 pl-4">
-                        <button type="button" class="mobile-dropdown-toggle text-gray-700 hover:text-blue-600 font-medium py-2 flex items-center justify-between w-full">
-                            <span>Galeri</span>
-                            <i class="fas fa-chevron-down text-xs"></i>
-                        </button>
-                        <div class="mobile-dropdown-content hidden pl-4 mt-2 space-y-2">
-                            <a href="{{ route('gallery.index') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Galeri Harian</a>
-                            <a href="{{ route('academic.extracurricular') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Galeri Alumni</a>
-                            <a href="{{ route('academic.achievement') }}" class="block text-gray-700 hover:text-blue-600 font-medium py-1">Galeri Guru</a>
-                    </div>
-                    
-                    <!-- Menu Lainnya Mobile -->
-                    <a href="{{ route('ppdb.index') }}" class="text-gray-700 hover:text-blue-600 font-medium py-2 {{ request()->routeIs('ppdb.*') ? 'text-blue-600' : '' }}">PPDB</a>
-                    <a href="{{ route('news.index') }}" class="text-gray-700 hover:text-blue-600 font-medium py-2 {{ request()->routeIs('news.*') ? 'text-blue-600' : '' }}">Berita</a>
-                    
-                    <a href="{{ route('contact.contact') }}" class="text-gray-700 hover:text-blue-600 font-medium py-2 {{ request()->routeIs('contact.*') ? 'text-blue-600' : '' }}">Kontak</a>
-                    
-                    <a href="{{ route('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium text-center mt-4">Login Admin</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <main>
-        @yield('content')
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white pt-12 pb-6">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- About -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Tentang Sekolah</h3>
-                    <p class="text-gray-300 mb-4">Sekolah Kita adalah institusi pendidikan yang berkomitmen untuk memberikan pendidikan terbaik bagi generasi penerus bangsa.</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-300 hover:text-white transition duration-200">
-                            <i class="fab fa-facebook-f"></i>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1.5 w-48 sp-card py-1 z-50"
+                         @click.outside="open = false">
+                        @foreach([
+                            ['route' => 'profile.history',        'label' => 'Sejarah Sekolah'],
+                            ['route' => 'profile.vision-mission', 'label' => 'Visi & Misi'],
+                            ['route' => 'profile.teachers',       'label' => 'Guru & Staf'],
+                            ['route' => 'profile.facilities',     'label' => 'Fasilitas'],
+                        ] as $item)
+                        <a href="{{ route($item['route']) }}"
+                           class="block px-4 py-2.5 text-sm text-cobalt-700 hover:bg-cobalt-50 hover:text-cobalt-900 transition-colors
+                                  {{ request()->routeIs($item['route']) ? 'bg-cobalt-50 text-cobalt-900 font-medium' : '' }}">
+                            {{ $item['label'] }}
                         </a>
-                        <a href="#" class="text-gray-300 hover:text-white transition duration-200">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white transition duration-200">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-300 hover:text-white transition duration-200">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        @endforeach
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Menu Cepat</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-300 hover:text-white transition duration-200">Beranda</a></li>
-                        <li><a href="{{ route('profile.history') }}" class="text-gray-300 hover:text-white transition duration-200">Sejarah</a></li>
-                        <li><a href="{{ route('profile.vision-mission') }}" class="text-gray-300 hover:text-white transition duration-200">Visi & Misi</a></li>
-                        <li><a href="{{ route('academic.achievement') }}" class="text-gray-300 hover:text-white transition duration-200">Prestasi</a></li>
-                        <li><a href="{{ route('contact.contact') }}" class="text-gray-300 hover:text-white transition duration-200">Kontak</a></li>
-                    </ul>
+                {{-- Akademik dropdown --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="nav-link px-3 flex items-center gap-1
+                                   {{ request()->routeIs('academic.*') ? 'active' : '' }}">
+                        Akademik
+                        <svg :class="open ? 'rotate-180' : ''" class="w-3.5 h-3.5 transition-transform duration-150"
+                             fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1.5 w-52 sp-card py-1 z-50">
+                        @foreach([
+                            ['route' => 'academic.curriculum',        'label' => 'Kurikulum'],
+                            ['route' => 'academic.extracurricular',   'label' => 'Ekstrakurikuler'],
+                            ['route' => 'academic.achievement',       'label' => 'Prestasi'],
+                            ['route' => 'academic-calendars.index',   'label' => 'Kalender Akademik'],
+                        ] as $item)
+                        <a href="{{ route($item['route']) }}"
+                           class="block px-4 py-2.5 text-sm text-cobalt-700 hover:bg-cobalt-50 hover:text-cobalt-900 transition-colors
+                                  {{ request()->routeIs($item['route']) ? 'bg-cobalt-50 text-cobalt-900 font-medium' : '' }}">
+                            {{ $item['label'] }}
+                        </a>
+                        @endforeach
+                    </div>
                 </div>
 
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Kontak Kami</h3>
-                    <ul class="space-y-3 text-gray-300">
-                        <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-blue-400"></i>
-                            <span>Jl. Pendidikan No. 123, Jakarta Pusat</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-phone mt-1 mr-3 text-blue-400"></i>
-                            <span>(021) 1234-5678</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-envelope mt-1 mr-3 text-blue-400"></i>
-                            <span>info@sekolahkita.sch.id</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-clock mt-1 mr-3 text-blue-400"></i>
-                            <span>Senin - Jumat: 07:00 - 16:00</span>
-                        </li>
-                    </ul>
+                {{-- PPDB dropdown --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="nav-link px-3 flex items-center gap-1
+                                   {{ request()->routeIs('ppdb.*') ? 'active' : '' }}">
+                        PPDB
+                        <svg :class="open ? 'rotate-180' : ''" class="w-3.5 h-3.5 transition-transform duration-150"
+                             fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1.5 w-48 sp-card py-1 z-50">
+                        @foreach([
+                            ['route' => 'ppdb.index', 'label' => 'Tentang PPDB'],
+                            ['route' => 'ppdb.info',  'label' => 'Informasi & Persyaratan'],
+                            ['route' => 'ppdb.form',  'label' => 'Daftar Sekarang'],
+                            ['route' => 'ppdb.status','label' => 'Cek Status Pendaftaran'],
+                        ] as $item)
+                        <a href="{{ route($item['route']) }}"
+                           class="block px-4 py-2.5 text-sm text-cobalt-700 hover:bg-cobalt-50 hover:text-cobalt-900 transition-colors
+                                  {{ request()->routeIs($item['route']) ? 'bg-cobalt-50 text-cobalt-900 font-medium' : '' }}">
+                            {{ $item['label'] }}
+                        </a>
+                        @endforeach
+                    </div>
                 </div>
 
-                <!-- Newsletter -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Newsletter</h3>
-                    <p class="text-gray-300 mb-4">Berlangganan newsletter untuk mendapatkan informasi terbaru.</p>
-                    <form class="flex flex-col space-y-3">
-                        <input type="email" placeholder="Email Anda" class="px-4 py-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition duration-200">
-                            <i class="fas fa-paper-plane mr-2"></i>Berlangganan
-                        </button>
-                    </form>
-                </div>
-            </div>
+                <a href="{{ route('news.index') }}"
+                   class="nav-link px-3 {{ request()->routeIs('news.*') ? 'active' : '' }}">
+                    Berita
+                </a>
+                <a href="{{ route('gallery.index') }}"
+                   class="nav-link px-3 {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
+                    Galeri
+                </a>
+                <a href="{{ route('gallery.index') }}"
+                   class="nav-link px-3 {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
+                    Alumni
+                </a>
+                <a href="{{ route('contact.contact') }}"
+                   class="nav-link px-3 {{ request()->routeIs('contact.*') ? 'active' : '' }}">
+                    Kontak
+                </a>
+            </nav>
 
-            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-300">
-                <p>&copy; {{ date('Y') }} Sekolah Kita. All rights reserved.</p>
+            {{-- CTA masuk + hamburger --}}
+            <div class="flex items-center gap-2">
+                @auth
+                <a href="{{ route(Auth::user()->dashboardRoute()) }}"
+                   class="hidden lg:inline-flex btn-primary text-xs py-2 px-4">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    Dashboard
+                </a>
+                @else
+                <a href="{{ route('login') }}"
+                   class="hidden lg:inline-flex items-center gap-1.5 text-sm font-semibold text-cobalt-600 hover:text-cobalt-800 transition-colors px-1">
+                    Masuk
+                </a>
+                @endauth
+
+                {{-- Mobile hamburger --}}
+                <button @click="open = !open"
+                        class="lg:hidden p-2 rounded-md text-cobalt-600 hover:bg-cobalt-50 focus-visible:ring-2 focus-visible:ring-gold-500"
+                        :aria-expanded="open.toString()" aria-label="Buka menu navigasi">
+                    <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                    <svg x-show="open" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- JavaScript -->
-    <script>
-        // Mobile Menu Toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
+    {{-- Mobile menu --}}
+    <div x-show="open"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+         class="lg:hidden border-t border-slate-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
+            <a href="{{ route('home') }}" class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50 {{ request()->routeIs('home') ? 'bg-cobalt-50 text-cobalt-900' : '' }}">Beranda</a>
 
-        // Mobile Dropdown Toggle
-        document.querySelectorAll('.mobile-dropdown-toggle').forEach(button => {
-            button.addEventListener('click', function() {
-                const content = this.nextElementSibling;
-                content.classList.toggle('hidden');
-                
-                // Rotate arrow
-                const icon = this.querySelector('i');
-                icon.classList.toggle('fa-chevron-down');
-                icon.classList.toggle('fa-chevron-up');
-            });
-        });
+            {{-- Profil accordion --}}
+            <div x-data="{ sub: false }">
+                <button @click="sub = !sub" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">
+                    Profil
+                    <svg :class="sub ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div x-show="sub" class="pl-4 mt-1 space-y-0.5 border-l-2 border-gold-300 ml-3">
+                    <a href="{{ route('profile.history') }}"        class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Sejarah Sekolah</a>
+                    <a href="{{ route('profile.vision-mission') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Visi & Misi</a>
+                    <a href="{{ route('profile.teachers') }}"       class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Guru & Staf</a>
+                    <a href="{{ route('profile.facilities') }}"     class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Fasilitas</a>
+                </div>
+            </div>
 
-        // Simple Slider Functionality
-        let currentSlide = 0;
-        function showSlide(index) {
-            const slides = document.querySelectorAll('.slide');
-            const dots = document.querySelectorAll('.dot');
-            
-            if (index >= slides.length) currentSlide = 0;
-            else if (index < 0) currentSlide = slides.length - 1;
-            else currentSlide = index;
-            
-            slides.forEach(slide => slide.classList.add('hidden'));
-            dots.forEach(dot => dot.classList.remove('bg-white', 'bg-opacity-100'));
-            
-            slides[currentSlide].classList.remove('hidden');
-            dots[currentSlide].classList.add('bg-white', 'bg-opacity-100');
-        }
+            {{-- Akademik accordion --}}
+            <div x-data="{ sub: false }">
+                <button @click="sub = !sub" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">
+                    Akademik
+                    <svg :class="sub ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div x-show="sub" class="pl-4 mt-1 space-y-0.5 border-l-2 border-gold-300 ml-3">
+                    <a href="{{ route('academic.curriculum') }}"      class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Kurikulum</a>
+                    <a href="{{ route('academic.extracurricular') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Ekstrakurikuler</a>
+                    <a href="{{ route('academic.achievement') }}"     class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Prestasi</a>
+                    <a href="{{ route('academic-calendars.index') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Kalender Akademik</a>
+                </div>
+            </div>
 
-        function nextSlide() {
-            showSlide(currentSlide + 1);
-        }
+            {{-- PPDB accordion --}}
+            <div x-data="{ sub: false }">
+                <button @click="sub = !sub" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">
+                    PPDB
+                    <svg :class="sub ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div x-show="sub" class="pl-4 mt-1 space-y-0.5 border-l-2 border-gold-300 ml-3">
+                    <a href="{{ route('ppdb.index') }}"  class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Tentang PPDB</a>
+                    <a href="{{ route('ppdb.info') }}"   class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Informasi & Persyaratan</a>
+                    <a href="{{ route('ppdb.form') }}"   class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Daftar Sekarang</a>
+                    <a href="{{ route('ppdb.status') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Cek Status Pendaftaran</a>
+                </div>
+            </div>
 
-        function prevSlide() {
-            showSlide(currentSlide - 1);
-        }
+            <a href="{{ route('news.index') }}"      class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50 {{ request()->routeIs('news.*') ? 'bg-cobalt-50 text-cobalt-900' : '' }}">Berita</a>
+            <a href="{{ route('gallery.index') }}"   class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Galeri</a>
+            <a href="{{ route('gallery.index') }}"   class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Alumni</a>
+            <a href="{{ route('contact.contact') }}" class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Kontak</a>
 
-        // Auto slide every 5 seconds
-        setInterval(nextSlide, 5000);
+            <div class="pt-3 border-t border-slate-200 mt-2">
+                @auth
+                <a href="{{ route(Auth::user()->dashboardRoute()) }}" class="btn-primary w-full justify-center text-sm">
+                    Buka Dashboard
+                </a>
+                @else
+                <a href="{{ route('login') }}" class="btn-primary w-full justify-center text-sm">
+                    Masuk ke Portal Sekolah
+                </a>
+                @endauth
+            </div>
+        </div>
+    </div>
+</header>
 
-        // Initialize first slide
-        document.addEventListener('DOMContentLoaded', function() {
-            showSlide(0);
-        });
-    </script>
+{{-- ─── Page Content ───────────────────────────────────────────────────── --}}
+<main>
+    @yield('content')
+</main>
 
-    @stack('scripts')
+{{-- ─── Footer ─────────────────────────────────────────────────────────── --}}
+<footer class="bg-cobalt-700 text-white mt-20">
+    {{-- Gold top bar — signature element --}}
+    <div class="h-1 bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+            {{-- Identitas --}}
+            <div class="lg:col-span-1">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-md bg-white/10 p-1.5">
+                        <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <p class="font-bold text-white text-base leading-none">SMAS St. Petrus</p>
+                        <p class="text-cobalt-300 text-xs mt-0.5">Pontianak</p>
+                    </div>
+                </div>
+                <p class="text-cobalt-200 text-sm leading-relaxed">
+                    Mendidik generasi berkarakter, cerdas, dan beriman sejak berdirinya sekolah ini.
+                </p>
+                <p class="mt-4 text-cobalt-300 text-sm italic">Syalom — Salve, Tuhan memberkati</p>
+            </div>
+
+            {{-- Navigasi --}}
+            <div>
+                <h4 class="sp-mark-sm text-sm font-semibold text-gold-400 uppercase tracking-wider mb-4">Sekolah</h4>
+                <ul class="space-y-2.5">
+                    @foreach([
+                        ['route' => 'profile.history',        'label' => 'Sejarah Sekolah'],
+                        ['route' => 'profile.vision-mission', 'label' => 'Visi & Misi'],
+                        ['route' => 'profile.teachers',       'label' => 'Guru & Staf'],
+                        ['route' => 'profile.facilities',     'label' => 'Fasilitas'],
+                    ] as $item)
+                    <li><a href="{{ route($item['route']) }}" class="text-cobalt-200 hover:text-white text-sm transition-colors">{{ $item['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- Akademik & PPDB --}}
+            <div>
+                <h4 class="sp-mark-sm text-sm font-semibold text-gold-400 uppercase tracking-wider mb-4">Akademik & PPDB</h4>
+                <ul class="space-y-2.5">
+                    @foreach([
+                        ['route' => 'academic.curriculum',      'label' => 'Kurikulum'],
+                        ['route' => 'academic.extracurricular', 'label' => 'Ekstrakurikuler'],
+                        ['route' => 'academic.achievement',     'label' => 'Prestasi'],
+                        ['route' => 'ppdb.form',                'label' => 'Daftar PPDB'],
+                        ['route' => 'ppdb.status',              'label' => 'Cek Status PPDB'],
+                    ] as $item)
+                    <li><a href="{{ route($item['route']) }}" class="text-cobalt-200 hover:text-white text-sm transition-colors">{{ $item['label'] }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+
+            {{-- Kontak --}}
+            <div>
+                <h4 class="sp-mark-sm text-sm font-semibold text-gold-400 uppercase tracking-wider mb-4">Hubungi Kami</h4>
+                <address class="not-italic space-y-3 text-sm text-cobalt-200">
+                    <p class="flex items-start gap-2.5">
+                        <svg class="w-4 h-4 mt-0.5 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Jl. A. R. Hakim, Medan, Sumatera Utara
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        (0561) 737-xxx
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        info@smastpetrus.sch.id
+                    </p>
+                    <p class="flex items-center gap-2.5">
+                        <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Senin–Jumat, 07.00–16.00 WIB
+                    </p>
+                </address>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-cobalt-600/60 flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p class="text-cobalt-400 text-xs">
+                &copy; {{ date('Y') }} SMA RK Santo Petrus Medan. Hak cipta dilindungi.
+            </p>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-cobalt-400 hover:text-white transition-colors text-xs">Kebijakan Privasi</a>
+                <a href="{{ route('contact.contact') }}" class="text-cobalt-400 hover:text-white transition-colors text-xs">Kontak</a>
+                <a href="{{ route('login') }}" class="text-cobalt-400 hover:text-white transition-colors text-xs">Portal Guru &amp; Siswa</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+@stack('scripts')
 </body>
 </html>

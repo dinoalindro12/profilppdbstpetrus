@@ -1,173 +1,152 @@
 @extends('admin.layouts.app')
-
-@section('title', 'Manajemen Kontak')
+@section('title', 'Pesan Masuk')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Manajemen Pesan Kontak</h2>
-        <div class="flex space-x-4">
-            <!-- Rate Limit Settings Button -->
-            <button onclick="toggleRateLimitModal()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition duration-200">
-                Pengaturan Rate Limit
-            </button>
-        </div>
-    </div>
+<div class="space-y-5" x-data="{ modalOpen: false }">
 
-    <!-- Rate Limit Info -->
-    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <div class="flex items-center">
-            <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+            <h2 class="sp-mark font-display text-xl font-bold text-cobalt-800">Pesan Masuk</h2>
+            <p class="text-cobalt-500 text-sm mt-1">Pesan dari formulir kontak halaman publik.</p>
+        </div>
+        <button @click="modalOpen = true" class="btn-secondary text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            <p class="text-blue-800">
-                Rate Limit saat ini: <strong>{{ $rateLimit }} pesan</strong> per <strong>{{ $rateLimitHours }} jam</strong> per IP
-            </p>
-        </div>
+            Rate Limit
+        </button>
     </div>
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table class="w-full">
-            <thead class="bg-gradient-to-r from-gray-50 to-blue-50">
-                <tr>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">Pengirim</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">Tujuan</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">Subjek</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">IP Address</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">Tanggal</th>
-                    <th class="px-6 py-4 text-left text-sm font-semibold text-gray-700 uppercase tracking-wider border-b border-gray-200">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-                @forelse($kontaks as $kontak)
-                <tr class="hover:bg-blue-50 transition-colors duration-200">
-                    <td class="px-6 py-4">
-                        <div class="text-sm font-semibold text-gray-900">{{ $kontak->name }}</div>
-                        <div class="text-sm text-gray-500">{{ $kontak->email }}</div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
-                            {{ $kontak->tujuan }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm font-medium text-gray-900">{{ Str::limit($kontak->subject, 50) }}</div>
-                        <div class="text-sm text-gray-500 mt-1">{{ Str::limit($kontak->message, 70) }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="text-sm text-gray-700 bg-gray-100 px-3 py-1 rounded-full font-mono">
-                            {{ $kontak->ip_address }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="text-sm text-gray-700">
-                            {{ $kontak->created_at->format('d M Y H:i') }}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center space-x-3">
-                            <a href="{{ route('admin.kontak.show', $kontak->id) }}" 
-                               class="text-blue-600 hover:text-blue-800 p-2 rounded-lg transition duration-200"
-                               title="Lihat Detail">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                            </a>
-                            <form action="{{ route('admin.kontak.destroy', $kontak->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" 
-                                        class="text-red-600 hover:text-red-800 p-2 rounded-lg transition duration-200"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus pesan ini?')"
-                                        title="Hapus">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-8 text-center">
-                        <div class="text-gray-500">
-                            <svg class="w-12 h-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
-                            </svg>
-                            <p class="text-sm">Tidak ada pesan kontak.</p>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+    {{-- Info rate limit --}}
+    <div class="sp-alert-info flex items-center gap-2">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Rate Limit aktif: <strong class="mx-1">{{ $rateLimit }} pesan</strong> per <strong class="mx-1">{{ $rateLimitHours }} jam</strong> per IP address.
+    </div>
 
-        <!-- Pagination -->
+    <div class="sp-card overflow-hidden">
+        @if($kontaks->count())
+        <div class="overflow-x-auto">
+            <table class="sp-table">
+                <thead>
+                    <tr>
+                        <th>Pengirim</th>
+                        <th>Tujuan</th>
+                        <th>Pesan</th>
+                        <th>IP</th>
+                        <th>Waktu</th>
+                        <th class="text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($kontaks as $k)
+                    <tr>
+                        <td>
+                            <p class="font-medium text-cobalt-800">{{ $k->name }}</p>
+                            <p class="text-xs text-cobalt-400">{{ $k->email }}</p>
+                        </td>
+                        <td>
+                            <span class="text-xs px-2.5 py-1 rounded-full bg-cobalt-50 text-cobalt-700 font-semibold">
+                                {{ $k->tujuan }}
+                            </span>
+                        </td>
+                        <td class="max-w-xs">
+                            <p class="text-sm font-medium text-cobalt-800 truncate">{{ $k->subject }}</p>
+                            <p class="text-xs text-cobalt-400 truncate mt-0.5">{{ Str::limit($k->message, 70) }}</p>
+                        </td>
+                        <td>
+                            <code class="text-xs bg-slate-100 text-cobalt-600 px-2 py-0.5 rounded font-mono">
+                                {{ $k->ip_address }}
+                            </code>
+                        </td>
+                        <td class="text-xs text-cobalt-500 whitespace-nowrap">
+                            {{ $k->created_at->translatedFormat('d M Y') }}<br>
+                            <span class="text-cobalt-400">{{ $k->created_at->format('H:i') }}</span>
+                        </td>
+                        <td>
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{{ route('admin.kontak.show', $k->id) }}"
+                                   class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold
+                                          bg-cobalt-50 text-cobalt-700 hover:bg-cobalt-100 transition-colors">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                    </svg>
+                                    Baca
+                                </a>
+                                <form method="POST" action="{{ route('admin.kontak.destroy', $k->id) }}"
+                                      onsubmit="return confirm('Hapus pesan dari {{ $k->name }}?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit"
+                                            class="p-1.5 text-cobalt-300 hover:text-ember hover:bg-red-50 rounded-lg transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
         @if($kontaks->hasPages())
-        <div class="px-6 py-4 border-t border-gray-200">
+        <div class="px-5 py-3 border-t border-slate-100">
             {{ $kontaks->links() }}
         </div>
         @endif
+        @else
+        <div class="py-14 text-center">
+            <svg class="w-12 h-12 text-cobalt-200 mx-auto mb-3" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-cobalt-500 font-medium">Belum ada pesan masuk.</p>
+        </div>
+        @endif
     </div>
-</div>
 
-<!-- Rate Limit Modal -->
-<div id="rateLimitModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
-    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div class="mt-3">
-            <h3 class="text-lg font-medium text-gray-900 mb-4">Pengaturan Rate Limit</h3>
-            
-            <form action="{{ route('admin.kontak.update-rate-limit') }}" method="POST">
+    {{-- Modal Rate Limit --}}
+    <div x-show="modalOpen"
+         x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-cobalt-900/60"
+         @click.self="modalOpen = false">
+        <div class="bg-white rounded-xl shadow-card-lg w-full max-w-sm mx-4 p-6">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="font-display text-base font-bold text-cobalt-800">Pengaturan Rate Limit</h3>
+                <button @click="modalOpen = false" class="text-cobalt-400 hover:text-cobalt-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form action="{{ route('admin.kontak.update-rate-limit') }}" method="POST" class="space-y-4">
                 @csrf
-                <div class="mb-4">
-                    <label for="rate_limit" class="block text-sm font-medium text-gray-700 mb-2">
-                        Jumlah Maksimal Pesan per IP
+                <div>
+                    <label class="block text-sm font-semibold text-cobalt-700 mb-1.5">
+                        Maks. pesan per IP
                     </label>
-                    <input type="number" name="rate_limit" id="rate_limit" 
-                           value="{{ $rateLimit }}" min="1" max="100"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <input type="number" name="rate_limit" value="{{ $rateLimit }}" min="1" max="100"
+                           class="w-full rounded-lg border px-4 py-2.5 text-sm border-slate-300 bg-white
+                                  focus:border-cobalt-500 focus:ring-2 focus:ring-cobalt-200 transition">
                 </div>
-
-                <div class="mb-6">
-                    <label for="rate_limit_hours" class="block text-sm font-medium text-gray-700 mb-2">
-                        Jangka Waktu (jam)
+                <div>
+                    <label class="block text-sm font-semibold text-cobalt-700 mb-1.5">
+                        Jangka waktu (jam)
                     </label>
-                    <input type="number" name="rate_limit_hours" id="rate_limit_hours" 
-                           value="{{ $rateLimitHours }}" min="1" max="24"
-                           class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    <input type="number" name="rate_limit_hours" value="{{ $rateLimitHours }}" min="1" max="24"
+                           class="w-full rounded-lg border px-4 py-2.5 text-sm border-slate-300 bg-white
+                                  focus:border-cobalt-500 focus:ring-2 focus:ring-cobalt-200 transition">
                 </div>
-
-                <div class="flex justify-end space-x-3">
-                    <button type="button" onclick="toggleRateLimitModal()" 
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-medium">
-                        Batal
-                    </button>
-                    <button type="submit" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">
-                        Simpan
-                    </button>
+                <div class="flex gap-3 pt-2">
+                    <button type="button" @click="modalOpen = false" class="btn-secondary flex-1 justify-center">Batal</button>
+                    <button type="submit" class="btn-primary flex-1 justify-center">Simpan</button>
                 </div>
             </form>
         </div>
     </div>
+
 </div>
-
-<script>
-function toggleRateLimitModal() {
-    const modal = document.getElementById('rateLimitModal');
-    modal.classList.toggle('hidden');
-}
-
-// Close modal when clicking outside
-document.getElementById('rateLimitModal').addEventListener('click', function(e) {
-    if (e.target.id === 'rateLimitModal') {
-        toggleRateLimitModal();
-    }
-});
-</script>
 @endsection

@@ -1,3 +1,220 @@
+/* ─── Google Fonts: Outfit + Lora — harus di atas semua @tailwind ────── */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ─── Design Tokens (CSS Custom Properties) ───────────────────────────── */
+:root {
+    --sp-cobalt:    #1A3A6C;  /* biru institusional utama */
+    --sp-cobalt-dk: #0E1F3C;  /* variasi gelap untuk hover */
+    --sp-cobalt-lt: #EDF1F8;  /* variasi terang untuk surface */
+    --sp-gold:      #C9A227;  /* emas liturgi – signature accent */
+    --sp-gold-lt:   #F5EAC8;  /* emas terang untuk latar */
+    --sp-slate:     #E8ECF0;  /* surface abu-biru */
+    --sp-ink:       #1C1F26;  /* teks utama */
+    --sp-ink-muted: #647688;  /* teks sekunder */
+    --sp-parchment: #F8F6F1;  /* background halaman */
+    --sp-ember:     #B33A1A;  /* merah bata – aksen warning/cta kritis */
+    --sp-white:     #FFFFFF;
+
+    --sp-radius:    6px;
+    --sp-radius-lg: 12px;
+    --sp-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────────── */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply font-sans text-ink bg-parchment;
+        font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    }
+
+    /* Teks panjang (artikel, deskripsi) pakai font serif Lora */
+    .prose-petrus {
+        @apply font-serif text-[1.0625rem] leading-relaxed text-ink;
+    }
+    .prose-petrus p { @apply mb-4; }
+    .prose-petrus strong { @apply font-semibold text-cobalt-600; }
+
+    /* Heading hierarchy */
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-display;
+    }
+
+    /* Focus visible — ring emas, bukan biru browser */
+    :focus-visible {
+        outline: 2px solid var(--sp-gold);
+        outline-offset: 3px;
+        border-radius: 3px;
+    }
+    /* Hapus outline untuk click, pertahankan untuk keyboard */
+    :focus:not(:focus-visible) {
+        outline: none;
+    }
+}
+
+/* ─── Signature Element ─────────────────────────────────────────────────
+   Garis vertikal emas di sisi kiri — referensi visual ke tanda buku/Alkitab.
+   Pakai .sp-mark di heading atau card yang perlu emphasis.
+─────────────────────────────────────────────────────────────────────────── */
+@layer components {
+    .sp-mark {
+        @apply pl-4 border-l-3 border-gold-500;
+    }
+
+    .sp-mark-sm {
+        @apply pl-3 border-l-3 border-gold-500;
+    }
+
+    /* Badge role — pill kecil untuk identifikasi role di dashboard */
+    .role-badge {
+        @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide;
+    }
+    .role-badge-kepala  { @apply bg-cobalt-600 text-white; }
+    .role-badge-admin   { @apply bg-cobalt-500 text-white; }
+    .role-badge-gurukel { @apply bg-gold-500 text-cobalt-900; }
+    .role-badge-gurumap { @apply bg-gold-400 text-cobalt-900; }
+    .role-badge-siswa   { @apply bg-slate-200 text-cobalt-700; }
+
+    /* Tombol utama */
+    .btn-primary {
+        @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] font-semibold text-sm
+               bg-cobalt-600 text-white
+               hover:bg-cobalt-700 active:bg-cobalt-800
+               focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2
+               transition-colors duration-200 cursor-pointer;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] font-semibold text-sm
+               bg-transparent text-cobalt-600 border border-cobalt-300
+               hover:bg-cobalt-50 hover:border-cobalt-400 active:bg-cobalt-100
+               focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2
+               transition-colors duration-200 cursor-pointer;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-[6px] font-semibold text-sm
+               bg-gold-500 text-cobalt-900
+               hover:bg-gold-400 active:bg-gold-600
+               focus-visible:ring-2 focus-visible:ring-cobalt-600 focus-visible:ring-offset-2
+               transition-colors duration-200 cursor-pointer;
+    }
+
+    /* Card standar */
+    .sp-card {
+        @apply bg-white rounded-xl border border-slate-200 shadow-card;
+    }
+
+    .sp-card-hover {
+        @apply sp-card hover:shadow-card-md hover:-translate-y-0.5 transition-all duration-200;
+    }
+
+    /* Divider dengan label — bukan hairline kosong */
+    .sp-divider {
+        @apply relative flex items-center gap-4;
+    }
+    .sp-divider::before,
+    .sp-divider::after {
+        content: "";
+        @apply flex-1 h-px bg-slate-200;
+    }
+
+    /* Stat card untuk dashboard */
+    .stat-card {
+        @apply sp-card p-5 flex items-start gap-4;
+    }
+    .stat-icon {
+        @apply flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center;
+    }
+
+    /* Nav link aktif — underline emas, bukan border-b biru */
+    .nav-link {
+        @apply relative text-[0.9375rem] font-medium text-cobalt-700 hover:text-cobalt-900
+               transition-colors duration-150 py-1;
+    }
+    .nav-link::after {
+        content: "";
+        @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold-500 transition-all duration-200;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        @apply w-full;
+    }
+    .nav-link.active {
+        @apply text-cobalt-900 font-semibold;
+    }
+
+    /* Tabel admin yang rapi */
+    .sp-table {
+        @apply w-full text-sm;
+    }
+    .sp-table thead tr {
+        @apply border-b-2 border-cobalt-100;
+    }
+    .sp-table thead th {
+        @apply py-3 px-4 text-left text-xs font-semibold text-cobalt-600 uppercase tracking-wider;
+    }
+    .sp-table tbody tr {
+        @apply border-b border-slate-100 hover:bg-cobalt-50/40 transition-colors;
+    }
+    .sp-table tbody td {
+        @apply py-3.5 px-4 text-ink;
+    }
+
+    /* Jadwal pelajaran — timeline style */
+    .schedule-slot {
+        @apply flex items-stretch gap-4 py-3.5 px-4 rounded-lg
+               hover:bg-cobalt-50/50 transition-colors duration-150;
+    }
+    .schedule-slot .time-col {
+        @apply flex-shrink-0 w-16 text-right;
+    }
+    .schedule-slot .separator {
+        @apply flex-shrink-0 w-px bg-gold-300 self-stretch mx-1;
+    }
+
+    /* Alert / flash message */
+    .sp-alert-success {
+        @apply bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg px-4 py-3 text-sm;
+    }
+    .sp-alert-error {
+        @apply bg-red-50 border border-ember/30 text-ember rounded-lg px-4 py-3 text-sm;
+    }
+    .sp-alert-info {
+        @apply bg-cobalt-50 border border-cobalt-200 text-cobalt-800 rounded-lg px-4 py-3 text-sm;
+    }
+}
+
+/* ─── Utilities tambahan ─────────────────────────────────────────────── */
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+    .leading-tight-display {
+        line-height: 1.08;
+    }
+    /* Animasi masuk halaman — satu momen terorkestrasi */
+    .animate-entry > * {
+        animation: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .animate-entry > *:nth-child(1) { animation-delay: 0ms; }
+    .animate-entry > *:nth-child(2) { animation-delay: 80ms; }
+    .animate-entry > *:nth-child(3) { animation-delay: 160ms; }
+    .animate-entry > *:nth-child(4) { animation-delay: 240ms; }
+    .animate-entry > *:nth-child(5) { animation-delay: 320ms; }
+}
+
+/* ─── Print ──────────────────────────────────────────────────────────── */
+@media print {
+    .no-print { display: none !important; }
+    body { background: white; color: black; }
+}

@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
             'phone' => '081234567890',
         ]);
         $this->call([
-        ProfileSeeder::class,
-        AcademicSeeder::class,
-        PpdbSeeder::class,
-        NewsSeeder::class,
-    ]);
+            ProfileSeeder::class,
+            AcademicSeeder::class,
+            PpdbSeeder::class,
+            NewsSeeder::class,
+            RoleUserSeeder::class,
+        ]);
     }
 }

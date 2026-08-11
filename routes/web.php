@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PpdbController;
 use App\Http\Controllers\Admin\AdminController;
@@ -85,12 +86,45 @@ Route::prefix('kontak')->name('contact.')->group(function () {
 
 // Dashboard route untuk Breeze compatibility
 Route::get('/dashboard', function () {
-    return redirect()->route('admin.dashboard');
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
+    return redirect()->route($user ? $user->dashboardRoute() : 'login');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// ─── Dashboard per Role ─────────────────────────────────────────────────────
+// Satu controller (AdminController::dashboard) yang mendispatch ke view berbeda.
+// Setiap route dilindungi middleware 'role' — tidak bisa diakses role lain.
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    // Kepala Sekolah
+    Route::get('/portal/kepala-sekolah', [AdminController::class, 'dashboard'])
+        ->middleware('role:kepala_sekolah')
+        ->name('dashboard.kepala_sekolah');
+
+    // Guru Kelas (Wali Kelas)
+    Route::get('/portal/guru-kelas', [AdminController::class, 'dashboard'])
+        ->middleware('role:guru_kelas')
+        ->name('dashboard.guru_kelas');
+
+    // Guru Mata Pelajaran
+    Route::get('/portal/guru-mapel', [AdminController::class, 'dashboard'])
+        ->middleware('role:guru_mapel')
+        ->name('dashboard.guru_mapel');
+
+    // Siswa
+    Route::get('/portal/siswa', [AdminController::class, 'dashboard'])
+        ->middleware('role:siswa')
+        ->name('dashboard.siswa');
+});
+
 // Admin Routes Group - HANYA SATU GROUP
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
+    ->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])
+        ->withoutMiddleware('role:admin,super_admin,kepala_sekolah')
+        ->middleware('role:admin,super_admin')
+        ->name('dashboard');
 
 
     Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.index');

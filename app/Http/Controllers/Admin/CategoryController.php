@@ -36,7 +36,7 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dibuat.');
+        return redirect()->route('admin.news.categories.index')->with('success', 'Kategori berhasil dibuat.');
     }
 
     public function edit(Category $category): View
@@ -57,7 +57,7 @@ class CategoryController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil diperbarui.');
+        return redirect()->route('admin.news.categories.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
     public function destroy(Category $category): RedirectResponse
@@ -67,6 +67,6 @@ class CategoryController extends Controller
         }
 
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('success', 'Kategori berhasil dihapus.');
+        return redirect()->route('admin.news.categories.index')->with('success', 'Kategori berhasil dihapus.');
     }
 }

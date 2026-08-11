@@ -3,54 +3,35 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Post;
+use App\Models\Extracurricular;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
-        // Dummy data untuk sementara
-        $news = [
-            [
-                'title' => 'Penerimaan Peserta Didik Baru 2024',
-                'excerpt' => 'Pendaftaran PPDB tahun ajaran 2024/2025 telah dibuka. Segera daftarkan putra-putri Anda.',
-                'date' => '2024-01-15',
-                'image' => 'https://via.placeholder.com/400x250/3B82F6/FFFFFF?text=Berita+1'
-            ],
-            [
-                'title' => 'Siswa Berprestasi Olimpiade Sains Nasional',
-                'excerpt' => 'Siswa kami meraih medali emas dalam Olimpiade Sains Nasional tingkat provinsi.',
-                'date' => '2024-01-10',
-                'image' => 'https://via.placeholder.com/400x250/10B981/FFFFFF?text=Berita+2'
-            ],
-            [
-                'title' => 'Kegiatan Bakti Sosial Siswa',
-                'excerpt' => 'Siswa-siswi melakukan bakti sosial di lingkungan sekitar sekolah.',
-                'date' => '2024-01-05',
-                'image' => 'https://via.placeholder.com/400x250/F59E0B/FFFFFF?text=Berita+3'
-            ]
-        ];
+        // Berita terbaru yang sudah dipublikasikan
+        $news = Post::where('is_published', true)
+            ->with('category')
+            ->latest('published_at')
+            ->take(5)
+            ->get()
+            ->map(fn($post) => [
+                'title'    => $post->title,
+                'slug'     => $post->slug,
+                'excerpt'  => $post->excerpt,
+                'date'     => $post->published_at ?? $post->created_at,
+                'image'    => $post->thumbnail ? asset('storage/' . $post->thumbnail) : null,
+                'category' => $post->category?->name,
+            ])->toArray();
 
-        $gallery = [
-            [
-                'image' => 'https://via.placeholder.com/300x200/3B82F6/FFFFFF?text=Galeri+1',
-                'title' => 'Kegiatan Belajar'
-            ],
-            [
-                'image' => 'https://via.placeholder.com/300x200/10B981/FFFFFF?text=Galeri+2',
-                'title' => 'Olahraga'
-            ],
-            [
-                'image' => 'https://via.placeholder.com/300x200/F59E0B/FFFFFF?text=Galeri+3',
-                'title' => 'Seni Budaya'
-            ],
-            [
-                'image' => 'https://via.placeholder.com/300x200/EF4444/FFFFFF?text=Galeri+4',
-                'title' => 'Laboratorium'
-            ]
-        ];
+        // Galeri placeholder — kosong jika tabel belum ada
+        $gallery = [];
 
-        return view('frontend.home', compact('news', 'gallery'));
+        // Ekstrakurikuler aktif
+        $extracurriculars = Extracurricular::orderBy('name')->get();
+
+        return view('frontend.home', compact('news', 'gallery', 'extracurriculars'));
     }
 }
