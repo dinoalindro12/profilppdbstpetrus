@@ -99,7 +99,7 @@ class ProfileController extends Controller
         $staff->is_active = $request->has('is_active');
 
         if ($request->hasFile('photo')) {
-            $imagePath = $request->file('photo')->store('public/staff');
+            $imagePath = $request->file('photo')->store('staff', 'public');
             $staff->photo = $imagePath;
         }
 
@@ -134,12 +134,10 @@ class ProfileController extends Controller
         $staff->is_active = $request->has('is_active');
 
         if ($request->hasFile('photo')) {
-            // Hapus foto lama jika ada
             if ($staff->photo) {
-                Storage::delete($staff->photo);
+                Storage::disk('public')->delete($staff->photo);
             }
-            $imagePath = $request->file('photo')->store('public/staff');
-            $staff->photo = $imagePath;
+            $staff->photo = $request->file('photo')->store('staff', 'public');
         }
 
         $staff->save();
@@ -150,7 +148,7 @@ class ProfileController extends Controller
     public function staffDestroy(Staff $staff)
     {
         if ($staff->photo) {
-            Storage::delete($staff->photo);
+            Storage::disk('public')->delete($staff->photo);
         }
         $staff->delete();
 
@@ -185,7 +183,7 @@ class ProfileController extends Controller
         $facility->is_active = $request->has('is_active');
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/facilities');
+            $imagePath = $request->file('image')->store('facilities', 'public');
             $facility->image = $imagePath;
         }
 
@@ -216,10 +214,9 @@ class ProfileController extends Controller
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
             if ($facility->image) {
-                Storage::delete($facility->image);
+                Storage::disk('public')->delete($facility->image);
             }
-            $imagePath = $request->file('image')->store('public/facilities');
-            $facility->image = $imagePath;
+            $facility->image = $request->file('image')->store('facilities', 'public');
         }
 
         $facility->save();
@@ -230,7 +227,7 @@ class ProfileController extends Controller
     public function facilitiesDestroy(Facility $facility)
     {
         if ($facility->image) {
-            Storage::delete($facility->image);
+            Storage::disk('public')->delete($facility->image);
         }
         $facility->delete();
 

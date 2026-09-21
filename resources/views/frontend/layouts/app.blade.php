@@ -3,13 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'SMAS St. Petrus') — Sekolah Menengah Atas Swasta Santo Petrus</title>
-    <meta name="description" content="@yield('description', 'SMAS St. Petrus — sekolah Katolik di Pontianak yang mendidik siswa menjadi pribadi berkarakter, cerdas, dan beriman.')">
+
+    {{-- ── SEO: Title ─────────────────────────────────────────────────── --}}
+    <title>@yield('title', 'SMA Swasta RK Deli Murni Delitua') — SMA Terbaik di Delitua, Deli Serdang</title>
+
+    {{-- ── SEO: Meta Description & Keywords ─────────────────────────── --}}
+    <meta name="description"
+          content="@yield('description', 'SMA Swasta RK Deli Murni Delitua — sekolah menengah atas terbaik di Delitua, Kabupaten Deli Serdang, Sumatera Utara. Akreditasi A, NPSN 10214181. Mendidik generasi berkarakter, cerdas, dan berprestasi.')">
+    <meta name="keywords"
+          content="@yield('keywords', 'SMA Swasta RK Deli Murni Delitua, SMA terbaik di Delitua, SMA RK Deli Murni Delitua, sekolah menengah atas Delitua, SMA Deli Serdang, PPDB SMA Delitua, SMA akreditasi A Delitua, sekolah Katolik Delitua, SMA Sumatera Utara')">
+    <meta name="author" content="SMA Swasta RK Deli Murni Delitua">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    {{-- ── SEO: Open Graph (Facebook, WhatsApp, dll) ─────────────────── --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SMA Swasta RK Deli Murni Delitua">
+    <meta property="og:title" content="@yield('title', 'SMA Swasta RK Deli Murni Delitua') — SMA Terbaik di Delitua">
+    <meta property="og:description" content="@yield('description', 'SMA Swasta RK Deli Murni Delitua — sekolah menengah atas terbaik di Delitua, Deli Serdang. Akreditasi A, NPSN 10214181.')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('storage/backgrounds/logo2.png') }}">
+    <meta property="og:locale" content="id_ID">
+
+    {{-- ── SEO: Twitter Card ──────────────────────────────────────────── --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'SMA Swasta RK Deli Murni Delitua')">
+    <meta name="twitter:description" content="@yield('description', 'SMA Swasta RK Deli Murni Delitua — SMA terbaik di Delitua, Deli Serdang. Akreditasi A.')">
+    <meta name="twitter:image" content="{{ asset('storage/backgrounds/logo2.png') }}">
+
+    {{-- ── SEO: Schema.org JSON-LD (Google rich results) ───────────────── --}}
+    <script type="application/ld+json">{!! json_encode([
+        '@context'      => 'https://schema.org',
+        '@type'         => 'HighSchool',
+        'name'          => 'SMA Swasta RK Deli Murni Delitua',
+        'alternateName' => 'SMA RK Deli Murni',
+        'description'   => 'Sekolah Menengah Atas Swasta RK Deli Murni di Delitua, Kabupaten Deli Serdang, Sumatera Utara. Akreditasi A.',
+        'url'           => config('app.url'),
+        'logo'          => asset('storage/backgrounds/logo2.png'),
+        'address'       => [
+            '@type'           => 'PostalAddress',
+            'streetAddress'   => 'Jl. Nogio VI No. 117',
+            'addressLocality' => 'Deli Tua Timur, Kec. Deli Tua',
+            'addressRegion'   => 'Sumatera Utara',
+            'addressCountry'  => 'ID',
+            'postalCode'      => '20355',
+        ],
+        'telephone'     => '+62-xxx-xxxx-xxxx',
+        'identifier'    => [
+            '@type' => 'PropertyValue',
+            'name'  => 'NPSN',
+            'value' => '10214181',
+        ],
+        'hasCredential' => 'Akreditasi A',
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    {{-- Icon set: Heroicons via CDN (konsisten, tidak butuh FA) --}}
-    <script src="https://unpkg.com/@heroicons/v1/outline/index.js" defer></script>
 </head>
 <body class="bg-parchment text-ink antialiased">
 
@@ -25,12 +73,12 @@
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center gap-3 shrink-0 group">
                 <div class="w-9 h-9 rounded-md overflow-hidden border border-cobalt-100">
-                    <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo SMAS St. Petrus"
+                    <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo SMA RK Deli Murni Delitua"
                          class="w-full h-full object-contain p-0.5">
                 </div>
                 <div class="leading-none">
-                    <span class="block text-[0.9375rem] font-bold text-cobalt-700 tracking-tight">SMAS St. Petrus</span>
-                    <span class="block text-[0.6875rem] font-medium text-cobalt-400 tracking-widest uppercase mt-0.5">Medan</span>
+                    <span class="block text-[0.9375rem] font-bold text-cobalt-700 tracking-tight">SMA RK Deli Murni</span>
+                    <span class="block text-[0.6875rem] font-medium text-cobalt-400 tracking-widest uppercase mt-0.5">Delitua</span>
                 </div>
             </a>
 
@@ -142,14 +190,38 @@
                    class="nav-link px-3 {{ request()->routeIs('news.*') ? 'active' : '' }}">
                     Berita
                 </a>
-                <a href="{{ route('gallery.index') }}"
-                   class="nav-link px-3 {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
-                    Galeri
-                </a>
-                <a href="{{ route('gallery.index') }}"
-                   class="nav-link px-3 {{ request()->routeIs('gallery.*') ? 'active' : '' }}">
-                    Alumni
-                </a>
+
+                {{-- Galeri dropdown --}}
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                            class="nav-link px-3 flex items-center gap-1
+                                   {{ request()->routeIs('gallery.*') || request()->routeIs('alumni.*') ? 'active' : '' }}">
+                        Galeri
+                        <svg :class="open ? 'rotate-180' : ''" class="w-3.5 h-3.5 transition-transform duration-150"
+                             fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="open" x-transition:enter="transition ease-out duration-150"
+                         x-transition:enter-start="opacity-0 -translate-y-1"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                         class="absolute top-full left-0 mt-1.5 w-48 sp-card py-1 z-50"
+                         @click.outside="open = false">
+                        <a href="{{ route('gallery.index') }}"
+                           class="block px-4 py-2.5 text-sm text-cobalt-700 hover:bg-cobalt-50 hover:text-cobalt-900 transition-colors
+                                  {{ request()->routeIs('gallery.*') ? 'bg-cobalt-50 text-cobalt-900 font-medium' : '' }}">
+                            Galeri Kegiatan
+                        </a>
+                        <a href="{{ route('alumni.galeri.index') }}"
+                           class="block px-4 py-2.5 text-sm text-cobalt-700 hover:bg-cobalt-50 hover:text-cobalt-900 transition-colors
+                                  {{ request()->routeIs('alumni.*') ? 'bg-cobalt-50 text-cobalt-900 font-medium' : '' }}">
+                            Galeri Alumni
+                        </a>
+                    </div>
+                </div>
+
                 <a href="{{ route('contact.contact') }}"
                    class="nav-link px-3 {{ request()->routeIs('contact.*') ? 'active' : '' }}">
                     Kontak
@@ -242,8 +314,19 @@
             </div>
 
             <a href="{{ route('news.index') }}"      class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50 {{ request()->routeIs('news.*') ? 'bg-cobalt-50 text-cobalt-900' : '' }}">Berita</a>
-            <a href="{{ route('gallery.index') }}"   class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Galeri</a>
-            <a href="{{ route('gallery.index') }}"   class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Alumni</a>
+
+            {{-- Galeri accordion --}}
+            <div x-data="{ sub: false }">
+                <button @click="sub = !sub" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">
+                    Galeri
+                    <svg :class="sub ? 'rotate-180' : ''" class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div x-show="sub" class="pl-4 mt-1 space-y-0.5 border-l-2 border-gold-300 ml-3">
+                    <a href="{{ route('gallery.index') }}"      class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Galeri Kegiatan</a>
+                    <a href="{{ route('alumni.galeri.index') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Galeri Alumni</a>
+                </div>
+            </div>
+
             <a href="{{ route('contact.contact') }}" class="block py-2.5 px-3 rounded-lg text-sm font-medium text-cobalt-700 hover:bg-cobalt-50">Kontak</a>
 
             <div class="pt-3 border-t border-slate-200 mt-2">
@@ -281,14 +364,24 @@
                         <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
-                        <p class="font-bold text-white text-base leading-none">SMAS St. Petrus</p>
-                        <p class="text-cobalt-300 text-xs mt-0.5">Pontianak</p>
+                        <p class="font-bold text-white text-base leading-none">SMA RK Deli Murni</p>
+                        <p class="text-cobalt-300 text-xs mt-0.5">Delitua, Deli Serdang</p>
                     </div>
                 </div>
-                <p class="text-cobalt-200 text-sm leading-relaxed">
-                    Mendidik generasi berkarakter, cerdas, dan beriman sejak berdirinya sekolah ini.
+                <p class="text-cobalt-200 text-sm leading-relaxed mb-3">
+                    Mendidik generasi berkarakter, cerdas, dan berprestasi sejak berdirinya sekolah ini.
                 </p>
-                <p class="mt-4 text-cobalt-300 text-sm italic">Syalom — Salve, Tuhan memberkati</p>
+                {{-- Badge akreditasi & NPSN --}}
+                <div class="flex flex-wrap gap-2 mt-3">
+                    <span class="inline-flex items-center gap-1.5 bg-gold-500/20 border border-gold-500/40
+                                 text-gold-300 text-xs font-bold px-2.5 py-1 rounded-full">
+                        Akreditasi A
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 bg-white/10 border border-white/20
+                                 text-cobalt-300 text-xs font-medium px-2.5 py-1 rounded-full">
+                        NPSN 10214181
+                    </span>
+                </div>
             </div>
 
             {{-- Navigasi --}}
@@ -331,19 +424,23 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        Jl. A. R. Hakim, Medan, Sumatera Utara
+                        <span>
+                            Jl. Nogio VI No. 117, Deli Tua Timur,<br>
+                            Kec. Deli Tua, Kab. Deli Serdang,<br>
+                            Sumatera Utara
+                        </span>
                     </p>
                     <p class="flex items-center gap-2.5">
                         <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                         </svg>
-                        (0561) 737-xxx
+                        (061) xxx-xxxx
                     </p>
                     <p class="flex items-center gap-2.5">
                         <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
-                        info@smastpetrus.sch.id
+                        info@smarkdelimurni.sch.id
                     </p>
                     <p class="flex items-center gap-2.5">
                         <svg class="w-4 h-4 shrink-0 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -357,7 +454,7 @@
 
         <div class="mt-12 pt-6 border-t border-cobalt-600/60 flex flex-col sm:flex-row justify-between items-center gap-3">
             <p class="text-cobalt-400 text-xs">
-                &copy; {{ date('Y') }} SMA RK Santo Petrus Medan. Hak cipta dilindungi.
+                &copy; {{ date('Y') }} SMA Swasta RK Deli Murni Delitua. Hak cipta dilindungi.
             </p>
             <div class="flex items-center gap-4">
                 <a href="#" class="text-cobalt-400 hover:text-white transition-colors text-xs">Kebijakan Privasi</a>

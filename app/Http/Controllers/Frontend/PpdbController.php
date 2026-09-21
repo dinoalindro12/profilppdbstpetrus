@@ -12,19 +12,17 @@ class PpdbController extends Controller
 {
     public function index()
     {
-        $info = PPDBInfo::orderBy('academic_year', 'desc')->get();
-        $activeInfo = PPDBInfo::where('is_active', true)->first();
-        
+        $info = PpdbInfo::where('is_active', true)
+            ->orderBy('academic_year', 'desc')
+            ->get();
+        $activeInfo = PpdbInfo::where('is_active', true)->first();
+
         return view('frontend.ppdb.index', compact('info', 'activeInfo'));
     }
 
     public function form()
     {
         $activeInfo = PpdbInfo::active()->first();
-        
-        if (!$activeInfo) {
-            return redirect()->route('ppdb.index')->with('error', 'Pendaftaran PPDB sedang tidak dibuka.');
-        }
 
         return view('frontend.ppdb.form', compact('activeInfo'));
     }

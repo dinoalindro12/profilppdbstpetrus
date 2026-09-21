@@ -1,25 +1,29 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AcademicCalendarController;
+use App\Http\Controllers\Admin\AcademicController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\GalleryController;           // Galeri Alumni
+use App\Http\Controllers\Admin\GaleriKegiatanController;    // Galeri Kegiatan Harian
+use App\Http\Controllers\Admin\KalenderController;
+use App\Http\Controllers\Admin\KontakController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PpdbController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\KontakController;
-use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\NewsController;
-use App\Http\Controllers\Admin\AcademicController;
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\KalenderController;
-use App\Http\Controllers\AcademicCalendarController;
-use App\Http\Controllers\Frontend\KontakaController;
 use App\Http\Controllers\Admin\PpdbRegistrationController;
-use App\Http\Controllers\ProfileController as UserProfileController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SambutanKepsekController;    // Sambutan Kepsek
+use App\Http\Controllers\Frontend\AcademicController as FrontendAcademicController;
+use App\Http\Controllers\Frontend\GaleriController as FrontendGaleriController;          // Frontend Alumni
+use App\Http\Controllers\Frontend\GaleriKegiatanController as FrontendKegiatanController; // Frontend Kegiatan
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\KontakaController;
+use App\Http\Controllers\Frontend\NewsController;
 use App\Http\Controllers\Frontend\PpdbController as FrontendPpdbController;
 use App\Http\Controllers\Frontend\ProfileController as FrontendProfileController;
-use App\Http\Controllers\Frontend\AcademicController as FrontendAcademicController;
+use App\Http\Controllers\ProfileController as UserProfileController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // Frontend Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -50,17 +54,14 @@ Route::prefix('akademik')->name('academic.')->group(function () {
     Route::get('/prestasi', [FrontendAcademicController::class, 'achievement'])->name('achievement');
 });
 
-// Frontend Blog Routes
-Route::get('/berita', [PostController::class, 'index'])->name('blog.index');
-Route::get('/berita/{post:slug}', [CategoryController::class, 'show'])->name('blog.show');
+// Blog routes lama dihapus — digantikan oleh news.* routes di bawah
 
 // PPDB Routes Frontend
 Route::prefix('ppdb')->name('ppdb.')->group(function () {
-    Route::get('/', [FrontendPpdbController::class, 'index'])->name('index');
-    Route::get('/form', [FrontendPpdbController::class, 'form'])->name('form');
-    Route::post('/info', [FrontendPpdbController::class, 'info'])->name('info');
-    Route::get('/info', [FrontendPpdbController::class, 'info'])->name('info');
-    Route::post('/form', [FrontendPpdbController::class, 'store'])->name('store');
+    Route::get('/', [FrontendPpdbController::class, 'index'])->name('index');        // Tentang PPDB
+    Route::get('/info', [FrontendPpdbController::class, 'info'])->name('info');      // Informasi & Persyaratan
+    Route::get('/form', [FrontendPpdbController::class, 'form'])->name('form');      // Form Pendaftaran
+    Route::post('/form', [FrontendPpdbController::class, 'store'])->name('store');   // Submit pendaftaran
     Route::get('/status', [FrontendPpdbController::class, 'status'])->name('status');
     Route::post('/status', [FrontendPpdbController::class, 'checkStatus'])->name('check-status');
 });
@@ -68,15 +69,23 @@ Route::prefix('ppdb')->name('ppdb.')->group(function () {
 // News Routes Frontend
 Route::prefix('berita')->name('news.')->group(function () {
     Route::get('/', [NewsController::class, 'index'])->name('index');
-    Route::get('/{slug}', [NewsController::class, 'show'])->name('detail');
     Route::get('/kategori/{slug}', [NewsController::class, 'category'])->name('category');
+    // detail harus setelah /kategori agar tidak tertangkap duluan
+    Route::get('/{slug}', [NewsController::class, 'show'])->name('detail');
+    // alias news.show → redirect ke news.detail agar view lama tidak 404
+    Route::get('/show/{slug}', fn($slug) => redirect()->route('news.detail', $slug))->name('show');
 });
 
-// Temporary Routes for Unbuilt Pages
+// ── Galeri Kegiatan Harian (publik) ──────────────────────────────────────
 Route::prefix('galeri')->name('gallery.')->group(function () {
-    Route::get('/', function () {
-        return view('frontend.gallery.index');
-    })->name('index');
+    Route::get('/', [FrontendKegiatanController::class, 'index'])->name('index');
+    Route::get('/{galeriKegiatan}', [FrontendKegiatanController::class, 'show'])->name('show');
+});
+
+// ── Galeri Alumni (publik) ────────────────────────────────────────────────
+Route::prefix('alumni/galeri')->name('alumni.galeri.')->group(function () {
+    Route::get('/', [FrontendGaleriController::class, 'index'])->name('index');
+    Route::get('/{galeri:slug}', [FrontendGaleriController::class, 'show'])->name('show');
 });
 
 Route::prefix('kontak')->name('contact.')->group(function () {
@@ -242,6 +251,38 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
     Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // ── Galeri Alumni (wisuda/angkatan) ────────────────────────────────
+    Route::prefix('galeri-alumni')->name('galeri.')->group(function () {
+        Route::get('/', [GalleryController::class, 'index'])->name('index');
+        Route::get('/create', [GalleryController::class, 'create'])->name('create');
+        Route::post('/', [GalleryController::class, 'store'])->name('store');
+        Route::get('/{galeri}/edit', [GalleryController::class, 'edit'])->name('edit');
+        Route::put('/{galeri}', [GalleryController::class, 'update'])->name('update');
+        Route::delete('/{galeri}', [GalleryController::class, 'destroy'])->name('destroy');
+        Route::delete('/foto/{foto}', [GalleryController::class, 'destroyFoto'])->name('foto.destroy');
+    });
+
+    // ── Galeri Kegiatan Harian ─────────────────────────────────────────
+    Route::prefix('galeri-kegiatan')->name('galeri-kegiatan.')->group(function () {
+        Route::get('/', [GaleriKegiatanController::class, 'index'])->name('index');
+        Route::get('/create', [GaleriKegiatanController::class, 'create'])->name('create');
+        Route::post('/', [GaleriKegiatanController::class, 'store'])->name('store');
+        Route::get('/{galeriKegiatan}/edit', [GaleriKegiatanController::class, 'edit'])->name('edit');
+        Route::put('/{galeriKegiatan}', [GaleriKegiatanController::class, 'update'])->name('update');
+        Route::delete('/{galeriKegiatan}', [GaleriKegiatanController::class, 'destroy'])->name('destroy');
+        Route::delete('/foto/{foto}', [GaleriKegiatanController::class, 'destroyFoto'])->name('foto.destroy');
+    });
+
+    // ── Sambutan Kepala Sekolah ────────────────────────────────────────
+    Route::prefix('sambutan-kepsek')->name('sambutan.')->group(function () {
+        Route::get('/', [SambutanKepsekController::class, 'index'])->name('index');
+        Route::get('/create', [SambutanKepsekController::class, 'create'])->name('create');
+        Route::post('/', [SambutanKepsekController::class, 'store'])->name('store');
+        Route::get('/{sambutan}/edit', [SambutanKepsekController::class, 'edit'])->name('edit');
+        Route::put('/{sambutan}', [SambutanKepsekController::class, 'update'])->name('update');
+        Route::delete('/{sambutan}', [SambutanKepsekController::class, 'destroy'])->name('destroy');
+    });
 });
 
 // Breeze Authentication Routes

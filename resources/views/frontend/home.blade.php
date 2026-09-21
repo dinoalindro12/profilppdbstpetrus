@@ -1,7 +1,8 @@
 @extends('frontend.layouts.app')
 
 @section('title', 'Beranda')
-@section('description', 'SMAS St. Petrus Pontianak — sekolah Katolik yang membentuk siswa berkarakter, cerdas, dan beriman sejak berdiri.')
+@section('description', 'SMA Swasta RK Deli Murni Delitua — sekolah menengah atas terbaik di Delitua, Deli Serdang. Akreditasi A, NPSN 10214181. Mendidik generasi berkarakter, cerdas, dan berprestasi.')
+@section('keywords', 'SMA Swasta RK Deli Murni Delitua, SMA terbaik di Delitua, SMA RK Deli Murni Delitua, PPDB SMA Delitua, SMA Deli Serdang akreditasi A')
 
 @section('content')
 
@@ -35,7 +36,7 @@
             <div class="flex flex-col justify-center py-20 lg:py-28 animate-entry">
                 <div class="sp-mark-sm inline-flex mb-6">
                     <span class="text-gold-400 text-sm font-semibold tracking-widest uppercase">
-                        Medan, Sumatera Utara
+                        Delitua, Deli Serdang — Sumatera Utara
                     </span>
                 </div>
 
@@ -46,18 +47,20 @@
                 </h1>
 
                 <p class="text-cobalt-200 text-lg leading-relaxed max-w-lg mb-8">
-                    Sejak berdiri, SMA RK Santo Petrus menemani ratusan keluarga Medan
+                    Sejak berdiri, SMA Swasta RK Deli Murni menemani ratusan keluarga Delitua
                     dalam perjalanan akademik putra-putri mereka menuju Perguruan Tinggi
                     dan kehidupan yang bermakna.
                 </p>
 
                 <div class="flex flex-wrap gap-3">
+                    @if($activePpdb)
                     <a href="{{ route('ppdb.form') }}" class="btn-gold text-base py-3 px-7">
-                        Daftar PPDB 2025/2026
+                        Daftar PPDB {{ $activePpdb->academic_year }}
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                         </svg>
                     </a>
+                    @endif
                     <a href="{{ route('profile.history') }}"
                        class="inline-flex items-center gap-2 text-base py-3 px-6 rounded-[6px] font-semibold
                               text-white border border-white/30 hover:bg-white/10 transition-colors duration-200">
@@ -80,23 +83,82 @@
                 </div>
             </div>
 
-            {{-- Kolom foto kepsek --}}
-            <div class="hidden lg:flex items-end justify-center relative pt-20">
-                {{-- Latar kuning miring --}}
-                <div class="absolute bottom-0 right-0 w-4/5 h-5/6 bg-cobalt-600 rounded-tl-3xl"></div>
-                <div class="relative z-10 rounded-full overflow-hidden w-[520px] h-[520px]">
-                    <img src="{{ asset('storage/backgrounds/kepsek1.png') }}" alt="Kepala Sekolah SMA RK Santo Petrus" class="h-full w-full object-cover object-center drop-shadow-2xl">
-                </div>
-                {{-- Label sambutan mengambang --}}
-                <div class="absolute top-32 right-8 bg-white text-cobalt-800 rounded-xl p-4 shadow-card-lg max-w-[220px]">
-                    <p class="text-xs text-cobalt-500 mb-1 font-medium">Sambutan Kepala Sekolah</p>
-                    <p class="text-sm font-serif italic leading-relaxed text-cobalt-700">
-                        "Syalom — semoga putra-putri kita tumbuh menjadi terang di tengah dunia."
-                    </p>
-                    <div class="mt-3 sp-mark-sm">
-                        <p class="text-xs font-semibold text-cobalt-700">Kepala Sekolah</p>
-                        <p class="text-xs text-cobalt-500">SMA RK Santo Petrus</p>
+            {{-- Kolom foto kepsek — dari DB --}}
+            <div class="hidden lg:flex items-center justify-center relative">
+
+                {{-- Latar dekoratif --}}
+                <div class="absolute bottom-0 right-0 w-4/5 h-5/6 bg-cobalt-600 rounded-tl-3xl -z-10"></div>
+
+                {{-- Wrapper: TIDAK overflow-hidden, supaya panel teks bebas melebar ke luar frame foto --}}
+                <div class="relative z-10 group w-[420px]">
+
+                    {{-- ① Foto: kotak rounded, bukan lingkaran --}}
+                    <div class="relative w-full aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl bg-cobalt-800">
+                        @if($sambutan && $sambutan->image)
+                            <img src="{{ asset('storage/'.$sambutan->image) }}"
+                                alt="{{ $sambutan->nama_kepsek ?? 'Kepala Sekolah' }}"
+                                class="w-full h-full object-cover object-top block
+                                        transition-all duration-500 ease-out
+                                        group-hover:blur-md group-hover:scale-110">
+                        @else
+                            <img src="{{ asset('storage/backgrounds/kepsek1.png') }}"
+                                alt="Kepala Sekolah SMA RK Deli Murni Delitua"
+                                class="w-full h-full object-cover object-top block
+                                        transition-all duration-500 ease-out
+                                        group-hover:blur-md group-hover:scale-110">
+                        @endif
+
+                        {{-- Overlay gelap, ikut dibatasi bentuk foto --}}
+                        <div class="absolute inset-0 bg-cobalt-900/70
+                                    opacity-0 group-hover:opacity-100
+                                    transition-opacity duration-500 ease-out pointer-events-none">
+                        </div>
+
+                        {{-- Nama & label, tetap kelihatan di atas foto saat normal --}}
+                        <div class="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-cobalt-950/90 to-transparent
+                                    opacity-100 group-hover:opacity-0 transition-opacity duration-300">
+                            <p class="text-sm font-bold text-white">
+                                {{ $sambutan->nama_kepsek ?? 'Kepala Sekolah' }}
+                            </p>
+                            <p class="text-[0.65rem] text-cobalt-300 mt-0.5">Kepala Sekolah</p>
+                        </div>
                     </div>
+
+                    {{-- ② Panel teks sambutan: DI LUAR frame foto, bisa discroll agar isi lengkap terbaca --}}
+                    <div class="absolute top-6 left-0 w-full z-20 rounded-2xl shadow-2xl
+                                bg-cobalt-900/95 backdrop-blur-sm
+                                max-h-[420px] overflow-y-auto
+                                [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+                                opacity-0 group-hover:opacity-100
+                                scale-95 group-hover:scale-100
+                                -translate-y-2 group-hover:translate-y-0
+                                transition-all duration-500 ease-out
+                                pointer-events-none group-hover:pointer-events-auto">
+
+                        <div class="flex flex-col items-center text-center px-8 pt-9 pb-8">
+                            <p class="text-[0.6rem] font-bold text-gold-400 uppercase tracking-widest mb-3">
+                                Sambutan Kepala Sekolah
+                            </p>
+
+                            <p class="font-serif italic text-white text-[0.85rem] leading-relaxed">
+                                "{!! nl2br(e(strip_tags($sambutan->content ?? 'Selamat datang di SMA RK Deli Murni Delitua.'))) !!}"
+                            </p>
+
+                            <div class="w-10 h-px bg-gold-400/60 mx-auto my-4"></div>
+
+                            <p class="text-sm font-bold text-white">
+                                {{ $sambutan->nama_kepsek ?? 'Kepala Sekolah' }}
+                            </p>
+                            <p class="text-[0.65rem] text-cobalt-300 mt-0.5">
+                                Kepala Sekolah
+                            </p>
+
+                            <p class="text-[0.6rem] text-white/40 mt-5 animate-bounce">
+                                ↑ geser untuk membaca selengkapnya
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -105,8 +167,44 @@
 
 
 {{-- ═══════════════════════════════════════════════════════════
-     STRIP PPDB — info jadwal pendaftaran yang sedang berjalan
+     SAMBUTAN KEPALA SEKOLAH — hanya tampil di mobile & tablet (< lg)
 ═══════════════════════════════════════════════════════════ --}}
+@if($sambutan)
+<section class="lg:hidden bg-cobalt-800 py-10 px-4 sm:px-6">
+    <div class="max-w-xl mx-auto flex flex-col items-center text-center gap-5">
+
+        {{-- Foto --}}
+        <div class="w-28 h-28 rounded-full overflow-hidden ring-4 ring-gold-400/60 shadow-xl shrink-0">
+            @if($sambutan->image)
+                <img src="{{ asset('storage/'.$sambutan->image) }}"
+                     alt="{{ $sambutan->nama_kepsek ?? 'Kepala Sekolah' }}"
+                     class="w-full h-full object-cover object-top">
+            @else
+                <img src="{{ asset('storage/backgrounds/kepsek1.png') }}"
+                     alt="Kepala Sekolah SMA RK Deli Murni Delitua"
+                     class="w-full h-full object-cover object-top">
+            @endif
+        </div>
+
+        {{-- Teks sambutan --}}
+        <div>
+            <p class="text-[0.6rem] font-bold text-gold-400 uppercase tracking-widest mb-3">
+                Sambutan Kepala Sekolah
+            </p>
+            <p class="font-serif italic text-cobalt-100 text-sm leading-relaxed">
+                "{!! nl2br(e(strip_tags($sambutan->content ?? 'Selamat datang di SMA RK Deli Murni Delitua.'))) !!}"
+            </p>
+            <div class="w-10 h-px bg-gold-400/60 mx-auto my-4"></div>
+            <p class="text-sm font-bold text-white">{{ $sambutan->nama_kepsek ?? 'Kepala Sekolah' }}</p>
+            <p class="text-xs text-cobalt-300 mt-0.5">Kepala Sekolah</p>
+        </div>
+
+    </div>
+</section>
+@endif
+
+{{-- STRIP PPDB — hanya tampil jika ada PPDB aktif --}}
+@if($activePpdb)
 <section class="bg-gold-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div class="flex items-center gap-3">
@@ -114,7 +212,9 @@
                 PPDB Dibuka
             </span>
             <p class="text-cobalt-900 text-sm font-medium">
-                Penerimaan Peserta Didik Baru 2025/2026 &mdash; Pendaftaran online sampai 30 Juli 2025.
+                Penerimaan Peserta Didik Baru {{ $activePpdb->academic_year }}
+                &mdash; Pendaftaran online sampai
+                {{ $activePpdb->registration_end->translatedFormat('d F Y') }}.
             </p>
         </div>
         <a href="{{ route('ppdb.form') }}"
@@ -126,6 +226,7 @@
         </a>
     </div>
 </section>
+@endif
 
 {{-- ═══════════════════════════════════════════════════════════
      BERITA TERBARU
@@ -241,7 +342,7 @@
 <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-2xl mb-14">
-            <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Mengapa SMAS St. Petrus?</p>
+            <p class="text-gold-600 text-sm font-semibold tracking-widest uppercase mb-2">Mengapa SMA RK Deli Murni?</p>
             <h2 class="sp-mark font-display text-display-md text-cobalt-800 text-balance">
                 Tiga hal yang membedakan kami dari sekolah lain
             </h2>
@@ -291,6 +392,56 @@
 </section>
 
 {{-- ═══════════════════════════════════════════════════════════
+     STRIP INFO RESMI SEKOLAH — Data identitas dari Dapodik
+═══════════════════════════════════════════════════════════ --}}
+<section class="py-10 bg-cobalt-700 border-t border-cobalt-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center gap-8">
+
+            {{-- Label --}}
+            <div class="shrink-0">
+                <p class="text-gold-400 text-xs font-bold uppercase tracking-widest mb-1">Identitas Sekolah</p>
+                <h3 class="font-display text-xl font-bold text-white leading-tight">
+                    SMA Swasta RK<br>Deli Murni Delitua
+                </h3>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="inline-flex items-center gap-1.5 bg-gold-500/20 border border-gold-400/40
+                                 text-gold-300 text-xs font-bold px-2.5 py-1 rounded-full">
+                        ★ Akreditasi A
+                    </span>
+                </div>
+            </div>
+
+            {{-- Divider --}}
+            <div class="hidden lg:block w-px h-16 bg-cobalt-500"></div>
+
+            {{-- Grid data --}}
+            <div class="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-4">
+                @foreach([
+                    ['label' => 'NPSN',        'value' => '10214181'],
+                    ['label' => 'Status',       'value' => 'Swasta'],
+                    ['label' => 'Jenjang',      'value' => 'SMA (DIKMEN)'],
+                    ['label' => 'Kecamatan',    'value' => 'Kec. Deli Tua'],
+                    ['label' => 'Kabupaten',    'value' => 'Kab. Deli Serdang'],
+                    ['label' => 'Provinsi',     'value' => 'Sumatera Utara'],
+                    ['label' => 'Alamat',       'value' => 'Jl. Nogio VI No. 117'],
+                    ['label' => 'Kelurahan',    'value' => 'Deli Tua Timur'],
+                ] as $item)
+                <div>
+                    <p class="text-[0.65rem] font-semibold text-cobalt-400 uppercase tracking-wider">
+                        {{ $item['label'] }}
+                    </p>
+                    <p class="text-sm font-medium text-cobalt-100 mt-0.5">
+                        {{ $item['value'] }}
+                    </p>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+{{-- ═══════════════════════════════════════════════════════════
      GALERI FOTO
 ═══════════════════════════════════════════════════════════ --}}
 <section class="py-20 bg-slate-100">
@@ -313,7 +464,8 @@
         @if(isset($gallery) && count($gallery) > 0)
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
             @foreach(array_slice($gallery, 0, 8) as $idx => $item)
-            <div class="group relative overflow-hidden rounded-xl {{ $idx === 0 ? 'md:col-span-2 md:row-span-2' : '' }} aspect-square">
+            <a href="{{ isset($item['id']) ? route('gallery.show', $item['id']) : '#' }}"
+               class="group relative overflow-hidden rounded-xl {{ $idx === 0 ? 'md:col-span-2 md:row-span-2' : '' }} aspect-square">
                 <img src="{{ $item['image'] ?? asset('images/placeholder.jpg') }}"
                      alt="{{ $item['title'] ?? 'Kegiatan sekolah' }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
@@ -321,7 +473,7 @@
                             flex items-end p-4 opacity-0 group-hover:opacity-100">
                     <p class="text-white text-sm font-medium">{{ $item['title'] ?? '' }}</p>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
         @else
@@ -333,9 +485,8 @@
 </section>
 
 
-{{-- ═══════════════════════════════════════════════════════════
-     CTA PPDB — bukan blok statistik angka besar generik
-═══════════════════════════════════════════════════════════ --}}
+{{-- CTA PPDB — hanya tampil jika ada PPDB aktif --}}
+@if($activePpdb)
 <section class="py-20 bg-cobalt-700 relative overflow-hidden">
     <div class="absolute inset-0 opacity-[0.04]"
          style="background-image: repeating-linear-gradient(-45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);
@@ -343,25 +494,27 @@
     </div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl">
-            <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-4">PPDB 2025/2026 Sedang Dibuka</p>
+            <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-4">
+                PPDB {{ $activePpdb->academic_year }} Sedang Dibuka
+            </p>
             <h2 class="font-display text-display-lg text-white mb-5 text-balance">
                 Daftarkan putra-putri Anda sebelum kuota penuh.
             </h2>
             <p class="text-cobalt-200 text-lg leading-relaxed mb-8 max-w-xl">
                 Proses seleksi terbuka, transparan, dan bisa dipantau secara online.
-                Pendaftaran ditutup <strong class="text-white">30 Juli 2025</strong>.
+                Pendaftaran ditutup
+                <strong class="text-white">{{ $activePpdb->registration_end->translatedFormat('d F Y') }}</strong>.
             </p>
 
-            {{-- Timeline pendaftaran — info nyata, bukan dekorasi --}}
+            {{-- Timeline dari data nyata --}}
             <div class="grid sm:grid-cols-3 gap-4 mb-10">
                 @foreach([
-                    ['tanggal' => '15 Jun', 'label' => 'Pendaftaran dibuka', 'selesai' => true],
-                    ['tanggal' => '30 Jul', 'label' => 'Batas pendaftaran',  'selesai' => false],
-                    ['tanggal' => '5 Agu',  'label' => 'Pengumuman hasil',   'selesai' => false],
+                    ['tanggal' => $activePpdb->registration_start->translatedFormat('d M'), 'label' => 'Pendaftaran dibuka'],
+                    ['tanggal' => $activePpdb->registration_end->translatedFormat('d M'),   'label' => 'Batas pendaftaran'],
+                    ['tanggal' => 'Pengumuman',                                              'label' => 'Lihat info PPDB'],
                 ] as $i => $fase)
                 <div class="flex items-center gap-3">
-                    <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm
-                                {{ $fase['selesai'] ? 'bg-gold-500 text-cobalt-900' : 'bg-white/10 text-white' }}">
+                    <div class="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-white/10 text-white">
                         {{ $i + 1 }}
                     </div>
                     <div>
@@ -385,6 +538,7 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- ═══════════════════════════════════════════════════════════
      EKSTRAKURIKULER — list nyata, bukan ikon generik
@@ -427,5 +581,148 @@
         </a>
     </div>
 </section>
+
+{{-- ═══════════════════════════════════════════════════════════
+     POP-UP PPDB — hanya di beranda, muncul SEKALI per kunjungan
+     Key localStorage: ppdb_dismissed_{academic_year}
+     Jika user tutup, tidak muncul lagi sampai tahun ajaran berubah
+═══════════════════════════════════════════════════════════ --}}
+@if($activePpdb)
+<div x-data="{
+        show: false,
+        key: 'ppdb_dismissed_{{ Str::slug($activePpdb->academic_year) }}',
+        init() {
+            if (!localStorage.getItem(this.key)) {
+                setTimeout(() => this.show = true, 900);
+            }
+        },
+        close() {
+            this.show = false;
+            localStorage.setItem(this.key, '1');
+        }
+     }"
+     x-show="show"
+     x-transition:enter="transition ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @keydown.escape.window="close()"
+     class="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-cobalt-950/65 backdrop-blur-sm"
+     @click.self="close()">
+
+    {{-- Card --}}
+    <div x-show="show"
+         x-transition:enter="transition ease-out duration-350"
+         x-transition:enter-start="opacity-0 scale-95 translate-y-6"
+         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+         class="relative w-full max-w-sm bg-white rounded-2xl overflow-hidden shadow-2xl">
+
+        {{-- ── Header cobalt ──────────────────────────────────────── --}}
+        <div class="relative bg-cobalt-700 px-6 pt-6 pb-14">
+            {{-- Diagonal pattern --}}
+            <div class="absolute inset-0 opacity-[0.07]"
+                 style="background-image:repeating-linear-gradient(-45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);
+                        background-size:18px 18px;"></div>
+
+            {{-- Gold line top --}}
+            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-gold-600 via-gold-300 to-gold-600"></div>
+
+            {{-- Close button --}}
+            <button @click="close()"
+                    class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/15 hover:bg-white/25
+                           flex items-center justify-center text-white transition-colors"
+                    aria-label="Tutup">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            {{-- Badge --}}
+            <span class="relative inline-flex items-center gap-1.5 bg-gold-500 text-cobalt-900
+                         text-[0.65rem] font-bold px-2.5 py-1 rounded-full uppercase tracking-widest mb-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-cobalt-800/40 animate-pulse"></span>
+                Pendaftaran Dibuka
+            </span>
+
+            {{-- Title --}}
+            <h2 class="relative font-display text-[1.6rem] font-bold text-white leading-tight">
+                PPDB {{ $activePpdb->academic_year }}
+            </h2>
+            <p class="relative text-cobalt-300 text-sm mt-1">
+                SMA Swasta RK Deli Murni Delitua
+            </p>
+        </div>
+
+        {{-- Wave separator — putih di atas cobalt --}}
+        <div class="relative -mt-8 z-10">
+            <svg viewBox="0 0 400 32" fill="white" class="w-full block" preserveAspectRatio="none" style="height:32px">
+                <path d="M0,32 C100,0 300,0 400,32 Z"/>
+            </svg>
+        </div>
+
+        {{-- ── Body ────────────────────────────────────────────────── --}}
+        <div class="relative z-10 bg-white px-6 pb-6 -mt-1">
+
+            {{-- Grid tanggal --}}
+            <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="rounded-xl border border-slate-200 px-4 py-3 text-center">
+                    <p class="text-[0.6rem] text-cobalt-400 font-bold uppercase tracking-wider mb-1">Mulai</p>
+                    <p class="font-display text-lg font-bold text-cobalt-800 leading-none">
+                        {{ $activePpdb->registration_start->translatedFormat('d M') }}
+                    </p>
+                    <p class="text-xs text-cobalt-400 mt-0.5">{{ $activePpdb->registration_start->format('Y') }}</p>
+                </div>
+                <div class="rounded-xl border border-cobalt-200 bg-cobalt-50 px-4 py-3 text-center">
+                    <p class="text-[0.6rem] text-cobalt-500 font-bold uppercase tracking-wider mb-1">Batas Daftar</p>
+                    <p class="font-display text-lg font-bold text-cobalt-800 leading-none">
+                        {{ $activePpdb->registration_end->translatedFormat('d M') }}
+                    </p>
+                    <p class="text-xs text-cobalt-400 mt-0.5">{{ $activePpdb->registration_end->format('Y') }}</p>
+                </div>
+            </div>
+
+            {{-- Kuota --}}
+            @if($activePpdb->quota)
+            <div class="flex items-center gap-2.5 bg-gold-50 border border-gold-200
+                        rounded-xl px-4 py-3 mb-4">
+                <svg class="w-4 h-4 text-gold-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <p class="text-sm text-cobalt-700">
+                    Kuota: <strong class="font-bold">{{ number_format($activePpdb->quota) }} siswa</strong>
+                </p>
+            </div>
+            @endif
+
+            {{-- CTA utama --}}
+            <a href="{{ route('ppdb.form') }}" @click="close()"
+               class="btn-primary w-full justify-center py-3 text-[0.9375rem] font-bold mb-2.5">
+                <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                Daftar Sekarang
+            </a>
+
+            {{-- Secondary actions --}}
+            <div class="flex gap-2.5">
+                <a href="{{ route('ppdb.info') }}" @click="close()"
+                   class="btn-secondary flex-1 justify-center py-2.5 text-sm">
+                    Info & Syarat
+                </a>
+                <button @click="close()"
+                        class="flex-1 py-2.5 text-sm font-semibold text-cobalt-400 hover:text-cobalt-600
+                               rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors">
+                    Nanti Saja
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
 @endsection

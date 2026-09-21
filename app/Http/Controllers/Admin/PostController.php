@@ -20,54 +20,48 @@ class PostController extends Controller
 
     public function create()
     {
-        $categories = Category::active()->get();
+        $categories = Category::orderBy('name')->get();
         return view('admin.news.posts.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255|unique:posts,title',
-            'excerpt' => 'nullable|string',
-            'content' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'status' => 'required|in:draft,published',
-            'published_at' => 'nullable|date',
+            'title'            => 'required|string|max:255|unique:posts,title',
+            'excerpt'          => 'nullable|string',
+            'content'          => 'required|string',
+            'thumbnail'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'category_id'      => 'nullable|exists:categories,id',
+            'status'           => 'required|in:draft,published',
+            'published_at'     => 'nullable|date',
             'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string'
         ]);
 
-        try {
-            $post = new Post();
-            $post->title = $request->title;
-            $post->slug = $this->generateUniqueSlug($request->title);
-            $post->excerpt = $request->excerpt;
-            $post->content = $request->content;
-            $post->category_id = $request->category_id;
-            $post->user_id = auth()->id();
-            $post->status = $request->status;
-            $post->published_at = $request->published_at ?? ($request->status == 'published' ? now() : null);
-            $post->is_featured = $request->has('is_featured');
-            $post->meta_description = $request->meta_description;
-            $post->meta_keywords = $request->meta_keywords;
+        $isPublished = $request->status === 'published';
 
-            if ($request->hasFile('thumbnail')) {
-                $imagePath = $request->file('thumbnail')->store('posts', 'public');
-                $post->thumbnail = $imagePath;
-            }
+        $post = new Post();
+        $post->title            = $request->title;
+        $post->slug             = $this->generateUniqueSlug($request->title);
+        $post->excerpt          = $request->excerpt;
+        $post->content          = $request->content;
+        $post->category_id      = $request->category_id;
+        $post->user_id          = auth()->id();
+        $post->is_published     = $isPublished;
+        $post->published_at     = $request->published_at ?? ($isPublished ? now() : null);
+        $post->meta_description = $request->meta_description;
 
-            $post->save();
-
-            return redirect()->route('admin.news.posts.index')->with('success', 'Post berhasil ditambahkan.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
+        if ($request->hasFile('thumbnail')) {
+            $post->thumbnail = $request->file('thumbnail')->store('posts', 'public');
         }
+
+        $post->save();
+
+        return redirect()->route('admin.news.posts.index')->with('success', 'Berita berhasil ditambahkan.');
     }
 
     public function edit(Post $post)
     {
-        $categories = Category::active()->get();
+        $categories = Category::orderBy('name')->get();
         return view('admin.news.posts.edit', compact('post', 'categories'));
     }
 
@@ -75,53 +69,38 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('posts')->ignore($post->id)
+                'required', 'string', 'max:255',
+                Rule::unique('posts')->ignore($post->id),
             ],
-            'excerpt' => 'nullable|string',
-            'content' => 'required|string',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'status' => 'required|in:draft,published',
-            'published_at' => 'nullable|date',
+            'excerpt'          => 'nullable|string',
+            'content'          => 'required|string',
+            'thumbnail'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'category_id'      => 'nullable|exists:categories,id',
+            'status'           => 'required|in:draft,published',
+            'published_at'     => 'nullable|date',
             'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string'
         ]);
 
-        try {
-            $post->title = $request->title;
-            
-            // Generate new slug only if title changed
-            if ($post->isDirty('title')) {
-                $post->slug = $this->generateUniqueSlug($request->title);
+        $isPublished = $request->status === 'published';
+
+        $post->title        = $request->title;
+        $post->excerpt      = $request->excerpt;
+        $post->content      = $request->content;
+        $post->category_id  = $request->category_id;
+        $post->is_published = $isPublished;
+        $post->published_at = $request->published_at ?? ($isPublished && !$post->published_at ? now() : $post->published_at);
+        $post->meta_description = $request->meta_description;
+
+        if ($request->hasFile('thumbnail')) {
+            if ($post->thumbnail) {
+                Storage::disk('public')->delete($post->thumbnail);
             }
-            
-            $post->excerpt = $request->excerpt;
-            $post->content = $request->content;
-            $post->category_id = $request->category_id;
-            $post->status = $request->status;
-            $post->published_at = $request->published_at ?? ($request->status == 'published' ? now() : null);
-            $post->is_featured = $request->has('is_featured');
-            $post->meta_description = $request->meta_description;
-            $post->meta_keywords = $request->meta_keywords;
-
-            if ($request->hasFile('thumbnail')) {
-                // Hapus thumbnail lama jika ada
-                if ($post->thumbnail) {
-                    Storage::disk('public')->delete($post->thumbnail);
-                }
-                $imagePath = $request->file('thumbnail')->store('posts', 'public');
-                $post->thumbnail = $imagePath;
-            }
-
-            $post->save();
-
-            return redirect()->route('admin.news.posts.index')->with('success', 'Post berhasil diperbarui.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
+            $post->thumbnail = $request->file('thumbnail')->store('posts', 'public');
         }
+
+        $post->save();
+
+        return redirect()->route('admin.news.posts.index')->with('success', 'Berita berhasil diperbarui.');
     }
 
     public function destroy(Post $post)

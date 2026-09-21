@@ -26,6 +26,11 @@ class Category extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

@@ -123,7 +123,7 @@ class AcademicController extends Controller
         $extracurricular->is_active = $request->has('is_active');
 
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/extracurriculars');
+            $imagePath = $request->file('image')->store('extracurriculars', 'public');
             $extracurricular->image = $imagePath;
         }
 
@@ -137,7 +137,7 @@ class AcademicController extends Controller
         return view('admin.academic.extracurricular.edit', compact('extracurricular'));
     }
 
-    public function extracurricularUpdate(Request $request, Extracurricular $extracurricular)
+   public function extracurricularUpdate(Request $request, Extracurricular $extracurricular)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -158,9 +158,9 @@ class AcademicController extends Controller
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
             if ($extracurricular->image) {
-                Storage::delete($extracurricular->image);
+                Storage::disk('public')->delete($extracurricular->image);
             }
-            $imagePath = $request->file('image')->store('public/extracurriculars');
+            $imagePath = $request->file('image')->store('extracurriculars', 'public');
             $extracurricular->image = $imagePath;
         }
 

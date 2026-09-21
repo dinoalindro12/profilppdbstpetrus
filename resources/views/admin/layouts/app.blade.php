@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Portal') — SMAS St. Petrus</title>
+    <title>@yield('title', 'Portal') — SMA RK Deli Murni Delitua</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full bg-slate-100 font-sans antialiased"
@@ -46,7 +46,7 @@
                     <img src="{{ asset('storage/backgrounds/logo2.png') }}" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="min-w-0">
-                    <p class="text-sm font-bold text-white truncate leading-none">SMAS St. Petrus</p>
+                    <p class="text-sm font-bold text-white truncate leading-none">SMA RK Deli Murni</p>
                     <p class="text-[0.65rem] text-cobalt-300 tracking-widest uppercase mt-0.5">Portal Sekolah</p>
                 </div>
             </a>

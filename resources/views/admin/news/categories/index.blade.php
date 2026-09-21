@@ -46,7 +46,7 @@
                         </td>
                         <td>
                             <div class="flex items-center justify-end gap-2">
-                                <a href="{{ route('admin.news.categories.edit', $cat->id) }}"
+                                <a href="{{ route('admin.news.categories.edit', $cat->slug) }}"
                                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold
                                           bg-cobalt-50 text-cobalt-700 hover:bg-cobalt-100 transition-colors">
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@
                                     </svg>
                                     Edit
                                 </a>
-                                <form method="POST" action="{{ route('admin.news.categories.destroy', $cat->id) }}"
+                                <form method="POST" action="{{ route('admin.news.categories.destroy', $cat->slug) }}"
                                       onsubmit="return confirm('Hapus kategori \'{{ $cat->name }}\'? Berita di kategori ini tidak ikut terhapus.')">
                                     @csrf @method('DELETE')
                                     <button type="submit"

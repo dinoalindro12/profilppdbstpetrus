@@ -89,7 +89,7 @@
                 </div>
                 <div class="mt-6 pt-4 border-t border-gray-100">
                     @if(now()->between($item->registration_start, $item->registration_end))
-                    <a href="{{ route('ppdb.registration') }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg font-medium transition-colors">
+                    <a href="{{ route('ppdb.form') }}" class="block w-full bg-blue-600 hover:bg-blue-700 text-white text-center py-2 rounded-lg font-medium transition-colors">
                         Daftar Sekarang
                     </a>
                     @elseif(now()->lt($item->registration_start))

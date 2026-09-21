@@ -18,7 +18,7 @@
     </div>
 
     <div class="sp-card p-6">
-        <form action="{{ route('admin.news.categories.update', $category->id) }}" method="POST" class="space-y-5">
+        <form action="{{ route('admin.news.categories.update', $category->slug) }}" method="POST" class="space-y-5">
             @csrf
             @method('PUT')
 

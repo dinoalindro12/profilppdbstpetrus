@@ -73,6 +73,9 @@
     ['route' => 'admin.news.posts.index',      'label' => 'Berita'],
     ['route' => 'admin.news.categories.index', 'label' => 'Kategori Berita'],
     ['route' => 'admin.kontak.index',          'label' => 'Pesan Masuk'],
+    ['route' => 'admin.galeri.index',          'label' => 'Galeri Alumni'],
+    ['route' => 'admin.galeri-kegiatan.index', 'label' => 'Galeri Kegiatan'],
+    ['route' => 'admin.sambutan.index',        'label' => 'Sambutan Kepsek'],
 ] as $item)
 <a href="{{ route($item['route']) }}"
    class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors
