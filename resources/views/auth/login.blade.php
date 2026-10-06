@@ -4,11 +4,11 @@
     <div class="flex items-center gap-3 mb-8 lg:hidden">
         <div class="w-9 h-9 rounded-lg bg-cobalt-100 border border-cobalt-200 p-1">
             <img src="{{ asset('storage/backgrounds/logo2.png') }}"
-                 alt="Logo SMAS St. Petrus" class="w-full h-full object-contain">
+                 alt="Logo SMA RK Deli Murni Delitua" class="w-full h-full object-contain">
         </div>
         <div>
-            <span class="block text-sm font-bold text-cobalt-800">SMAS St. Petrus</span>
-            <span class="block text-xs text-cobalt-400">Pontianak</span>
+            <span class="block text-sm font-bold text-cobalt-800">SMA RK Deli Murni</span>
+            <span class="block text-xs text-cobalt-400">Delitua</span>
         </div>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="mb-8">
         <h1 class="font-display text-2xl font-bold text-cobalt-800 mb-1">Masuk ke Portal</h1>
         <p class="text-cobalt-500 text-sm">
-            Satu akun untuk semua peran — kepala sekolah, guru, maupun siswa.
+            .
         </p>
     </div>
 
@@ -126,12 +126,6 @@
             Masuk
         </button>
     </form>
-
-    {{-- Hint role --}}
-    <p class="mt-8 text-xs text-cobalt-400 text-center leading-relaxed">
-        Akun Anda menentukan tampilan yang muncul setelah masuk —<br>
-        kepala sekolah, admin, guru, atau siswa.
-    </p>
 
     {{-- Link kembali (mobile only) --}}
     <div class="mt-6 text-center lg:hidden">

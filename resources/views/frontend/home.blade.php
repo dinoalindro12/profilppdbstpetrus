@@ -40,6 +40,19 @@
                     </span>
                 </div>
 
+                {{-- Badge Akreditasi --}}
+                <div class="flex flex-wrap items-center gap-2 mb-5">
+                    <span class="inline-flex items-center gap-1.5 bg-gold-500 text-cobalt-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01L12 2z"/>
+                        </svg>
+                        Akreditasi A — BAN-S/M
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 bg-white/10 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/20">
+                        NPSN 10214181
+                    </span>
+                </div>
+
                 <h1 class="font-display text-display-xl leading-tight-display text-balance text-white mb-6">
                     Kami mendidik siswa<br>
                     yang <em class="not-italic text-gold-400">berani berpikir</em><br>
@@ -72,7 +85,7 @@
                 <div class="mt-14 grid grid-cols-3 gap-6 pt-10 border-t border-white/10">
                     @foreach([
                         ['angka' => '1975',  'konteks' => 'Tahun sekolah ini berdiri'],
-                        ['angka' => '98%',   'konteks' => 'Lulusan diterima di PTN/PTS pilihan'],
+                        ['angka' => 'A',     'konteks' => 'Akreditasi BAN-S/M — kualitas terjamin'],
                         ['angka' => '40+',   'konteks' => 'Prestasi akademik & non-akademik'],
                     ] as $f)
                     <div>

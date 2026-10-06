@@ -248,9 +248,9 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
     });
 
     // Breeze Profile Routes (untuk edit profile user)
-    Route::get('/profile', [UserProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [UserProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/akun', [UserProfileController::class, 'edit'])->name('account.edit');
+    Route::patch('/akun', [UserProfileController::class, 'update'])->name('account.update');
+    Route::delete('/akun', [UserProfileController::class, 'destroy'])->name('account.destroy');
 
     // ── Galeri Alumni (wisuda/angkatan) ────────────────────────────────
     Route::prefix('galeri-alumni')->name('galeri.')->group(function () {

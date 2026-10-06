@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'SMAS St. Petrus') }} — Portal</title>
+    <title>{{ config('app.name', 'SMA RK Deli Murni Delitua') }} — Portal</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full bg-cobalt-700 antialiased font-sans">
@@ -27,11 +27,11 @@
             <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-11 h-11 rounded-lg bg-white/10 border border-white/20 p-1.5">
                     <img src="{{ asset('storage/backgrounds/logo2.png') }}"
-                         alt="Logo SMAS St. Petrus" class="w-full h-full object-contain">
+                         alt="Logo SMA RK Deli Murni Delitua" class="w-full h-full object-contain">
                 </div>
                 <div class="leading-none">
-                    <span class="block text-base font-bold text-white tracking-tight">SMAS St. Petrus</span>
-                    <span class="block text-xs font-medium text-cobalt-300 tracking-widest uppercase mt-0.5">Pontianak</span>
+                    <span class="block text-base font-bold text-white tracking-tight">SMA RK Deli Murni</span>
+                    <span class="block text-xs font-medium text-cobalt-300 tracking-widest uppercase mt-0.5">Delitua</span>
                 </div>
             </a>
         </div>
@@ -45,10 +45,6 @@
                 </p>
                 <p class="text-cobalt-300 text-sm mt-3 not-italic">— Yohanes 10:10</p>
             </div>
-            <p class="text-cobalt-200 text-sm leading-relaxed max-w-sm">
-                Portal ini adalah akses terpusat bagi kepala sekolah, guru, dan siswa
-                SMAS St. Petrus untuk mengelola kegiatan akademik sehari-hari.
-            </p>
         </div>
 
         {{-- Link kembali ke beranda --}}
