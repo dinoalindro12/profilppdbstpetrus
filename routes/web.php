@@ -142,7 +142,9 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
     Route::delete('/kontak/{id}', [KontakController::class, 'destroy'])->name('kontak.destroy');
     Route::post('/kontak/rate-limit', [KontakController::class, 'updateRateLimit'])->name('kontak.update-rate-limit');
     
-    // Profile Management Routes
+    // Profile Management Routes — hanya super_admin
+    Route::middleware('role:super_admin')->group(function () {
+
     Route::prefix('profile')->name('profile.')->group(function () {
         // Sejarah Sekolah
         Route::get('/history', [ProfileController::class, 'history'])->name('history');
@@ -169,7 +171,7 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
         Route::delete('/facilities/{facility}', [ProfileController::class, 'facilitiesDestroy'])->name('facilities.destroy');
     });
 
-    // manajemen kalender akademik
+    // manajemen kalender akademik — hanya super_admin
     Route::prefix('academic')->name('academic.')->group(function () {
         Route::resource('academic-calendars', KalenderController::class);
         Route::get('/academic-calendars/{academicCalendar}/download', [KalenderController::class, 'download'])->name('academic-calendars.download');
@@ -177,7 +179,8 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
         Route::post('/academic-calendars/{id}/restore', [KalenderController::class, 'restore'])->name('academic-calendars.restore');
         Route::delete('/academic-calendars/{id}/force-delete', [KalenderController::class, 'forceDestroy'])->name('academic-calendars.force-delete');
     });
-    // Academic Management Routes
+
+    // Academic Management Routes — hanya super_admin
     Route::prefix('academic')->name('academic.')->group(function () {
         // Curriculum Routes
         Route::get('/curriculum', [AcademicController::class, 'curriculumIndex'])->name('curriculum.index');
@@ -203,6 +206,8 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
         Route::put('/achievement/{achievement}', [AcademicController::class, 'achievementUpdate'])->name('achievement.update');
         Route::delete('/achievement/{achievement}', [AcademicController::class, 'achievementDestroy'])->name('achievement.destroy');
     });
+
+    }); // end role:super_admin
 
     // PPDB Management Routes
     Route::prefix('ppdb')->name('ppdb.')->group(function () {

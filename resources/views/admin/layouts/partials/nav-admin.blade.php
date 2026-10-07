@@ -17,7 +17,8 @@
     Dashboard
 </a>
 
-{{-- ── Profil Sekolah ──────────────────────────────────────── --}}
+{{-- ── Profil Sekolah — hanya super_admin ─────────────────── --}}
+@if(auth()->user()->role === 'super_admin')
 <p class="px-3 pt-4 pb-1 text-[0.65rem] font-bold text-cobalt-400 uppercase tracking-wider">Profil Sekolah</p>
 
 @foreach([
@@ -33,8 +34,10 @@
     {{ $item['label'] }}
 </a>
 @endforeach
+@endif
 
-{{-- ── Akademik ────────────────────────────────────────────── --}}
+{{-- ── Akademik — hanya super_admin ──────────────────────── --}}
+@if(auth()->user()->role === 'super_admin')
 <p class="px-3 pt-4 pb-1 text-[0.65rem] font-bold text-cobalt-400 uppercase tracking-wider">Akademik</p>
 
 @foreach([
@@ -50,6 +53,7 @@
     {{ $item['label'] }}
 </a>
 @endforeach
+@endif
 
 {{-- ── PPDB ────────────────────────────────────────────────── --}}
 <p class="px-3 pt-4 pb-1 text-[0.65rem] font-bold text-cobalt-400 uppercase tracking-wider">PPDB</p>
