@@ -9,13 +9,16 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Administrator',
-            'email' => 'admin@sekolah.dev',
-            'password' => bcrypt('password'),
-            'role' => 'super_admin',
-            'phone' => '081234567890',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@sekolah.dev'],
+            [
+                'name'      => 'Administrator',
+                'password'  => bcrypt('password'),
+                'role'      => 'super_admin',
+                'phone'     => '081234567890',
+                'is_active' => true,
+            ]
+        );
         $this->call([
             ProfileSeeder::class,
             AcademicSeeder::class,
