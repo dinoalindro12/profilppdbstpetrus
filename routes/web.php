@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AcademicCalendarController;
 use App\Http\Controllers\Admin\AcademicController;
 use App\Http\Controllers\Admin\AdminController;
@@ -251,6 +252,17 @@ Route::middleware(['auth', 'verified', 'role:admin,super_admin,kepala_sekolah'])
     Route::get('/akun', [UserProfileController::class, 'edit'])->name('account.edit');
     Route::patch('/akun', [UserProfileController::class, 'update'])->name('account.update');
     Route::delete('/akun', [UserProfileController::class, 'destroy'])->name('account.destroy');
+
+    // ── Kelola Pengguna — hanya kepala sekolah ────────────────────────────
+    Route::middleware('role:kepala_sekolah')
+        ->prefix('pengguna')->name('users.')
+        ->group(function () {
+            Route::get('/',          [UserController::class, 'index'])->name('index');
+            Route::get('/tambah',    [UserController::class, 'create'])->name('create');
+            Route::post('/',         [UserController::class, 'store'])->name('store');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+            Route::patch('/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('toggle-active');
+        });
 
     // ── Galeri Alumni (wisuda/angkatan) ────────────────────────────────
     Route::prefix('galeri-alumni')->name('galeri.')->group(function () {
