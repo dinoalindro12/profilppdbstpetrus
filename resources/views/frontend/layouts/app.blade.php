@@ -332,10 +332,6 @@
                 <a href="{{ route(Auth::user()->dashboardRoute()) }}" class="btn-primary w-full justify-center text-sm">
                     Buka Dashboard
                 </a>
-                @else
-                <a href="{{ route('login') }}" class="btn-primary w-full justify-center text-sm">
-                    Masuk ke Portal Sekolah
-                </a>
                 @endauth
             </div>
         </div>
