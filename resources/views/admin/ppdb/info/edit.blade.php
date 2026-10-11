@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Info PPDB')
+@section('title', 'Edit Info PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="mb-6">
-        <h2 class="text-2xl font-bold">Edit Info PPDB</h2>
+        <h2 class="text-2xl font-bold">Edit Info PPDB SMA SRK Deli Murni Delitua</h2>
         <p class="text-gray-600 mt-2">Perbarui informasi Penerimaan Peserta Didik Baru</p>
     </div>
 
@@ -102,11 +102,11 @@
                             class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                         >
                         <label for="is_active" class="ml-2 block text-sm text-gray-700">
-                            Aktifkan info PPDB ini
+                            Aktifkan info PPDB SMA SRK Deli Murni Delitua ini
                         </label>
                     </div>
                     <p class="mt-1 text-sm text-gray-500">
-                        Jika dicentang, info PPDB ini akan ditampilkan sebagai informasi PPDB yang sedang berjalan. Jika tidak dicentang, info PPDB ini akan disimpan sebagai nonaktif.
+                        Jika dicentang, info PPDB SMA SRK Deli Murni Delitua ini akan ditampilkan sebagai informasi PPDB yang sedang berjalan. Jika tidak dicentang, info PPDB ini akan disimpan sebagai nonaktif.
                     </p>
                 </div>
                 
@@ -120,7 +120,7 @@
                         name="description" 
                         rows="4"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 @error('description') border-red-500 @enderror"
-                        placeholder="Tambahkan informasi detail tentang PPDB..."
+                        placeholder="Tambahkan informasi detail tentang PPDB SMA SRK Deli Murni Delitua..."
                     >{{ old('description', $info->description) }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

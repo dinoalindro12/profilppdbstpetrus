@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Hasil Status PPDB - Sekolah Kita')
+@section('title', 'Hasil Status PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <section class="py-16 bg-gray-50">

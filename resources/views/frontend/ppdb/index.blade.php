@@ -1,13 +1,13 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Informasi PPDB')
+@section('title', 'Informasi PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <!-- Header Section -->
     <div class="text-center mb-12">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Informasi Penerimaan Peserta Didik Baru</h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Berikut adalah informasi lengkap mengenai PPDB tahun ajaran terbaru. Pastikan untuk membaca semua informasi dengan teliti sebelum melakukan pendaftaran.</p>
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Informasi Penerimaan Peserta Didik Baru SMAS RK Deli Murni Delitua</h1>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Berikut adalah informasi lengkap mengenai PPDB SMAS RK Deli Murni Delitua tahun ajaran terbaru. Pastikan untuk membaca semua informasi dengan teliti sebelum melakukan pendaftaran.</p>
     </div>
 
     <!-- Info Alert -->
@@ -20,7 +20,7 @@
             <div class="ml-3">
                 <h3 class="text-sm font-medium text-blue-800">Pendaftaran Sedang Berlangsung!</h3>
                 <div class="mt-1 text-sm text-blue-700">
-                    <p>Periode pendaftaran PPDB {{ $activeInfo->academic_year }} sedang berlangsung hingga {{ $activeInfo->registration_end->format('d F Y') }}. Segera lakukan pendaftaran sebelum kuota penuh.</p>
+                    <p>Periode pendaftaran PPDB SMA SRK Deli Murni Delitua {{ $activeInfo->academic_year }} sedang berlangsung hingga {{ $activeInfo->registration_end->format('d F Y') }}. Segera lakukan pendaftaran sebelum kuota penuh.</p>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-xl font-bold text-gray-800">PPDB {{ $item->academic_year }}</h3>
+                    <h3 class="text-xl font-bold text-gray-800">PPDB SMA SRK Deli Murni Delitua {{ $item->academic_year }}</h3>
                     <span class="px-3 py-1 text-xs font-semibold rounded-full 
                         {{ $item->is_active ? 'bg-green-100 text-green-800' : 
                           (now()->between($item->registration_start, $item->registration_end) ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') }}">
@@ -107,8 +107,8 @@
         @empty
         <div class="col-span-full text-center py-12">
             <i class="fas fa-calendar-times text-gray-400 text-5xl mb-4"></i>
-            <h3 class="text-xl font-medium text-gray-700 mb-2">Tidak Ada Informasi PPDB</h3>
-            <p class="text-gray-500">Saat ini tidak ada informasi PPDB yang tersedia.</p>
+            <h3 class="text-xl font-medium text-gray-700 mb-2">Tidak Ada Informasi PPDB SMA SRK Deli Murni Delitua</h3>
+            <p class="text-gray-500">Saat ini tidak ada informasi PPDB SMA SRK Deli Murni Delitua yang tersedia.</p>
         </div>
         @endforelse
     </div>
@@ -149,7 +149,7 @@
     <!-- Timeline Section -->
     @if($activeInfo)
     <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="text-xl font-bold text-gray-800 mb-6">Timeline PPDB {{ $activeInfo->academic_year }}</h3>
+        <h3 class="text-xl font-bold text-gray-800 mb-6">Timeline PPDB SMA SRK Deli Murni Delitua {{ $activeInfo->academic_year }}</h3>
         <div class="relative">
             <!-- Timeline Line -->
             <div class="absolute left-4 top-0 h-full w-0.5 bg-blue-200"></div>

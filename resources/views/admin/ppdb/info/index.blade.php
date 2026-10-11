@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Info PPDB')
+@section('title', 'Info PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Info PPDB</h2>
+        <h2 class="text-2xl font-bold">Info PPDB SMAS RK Deli Murni Delitua</h2>
         <a href="{{ route('admin.ppdb.info.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium">
-            Tambah Info PPDB
+            Tambah Info PPDB SMAS RK Deli Murni Delitua
         </a>
     </div>
 
@@ -52,7 +52,7 @@
                 @empty
                 <tr>
                     <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                        Tidak ada data info PPDB.
+                        Tidak ada data info PPDB SMA SRK Deli Murni Delitua.
                     </td>
                 </tr>
                 @endforelse

@@ -49,7 +49,7 @@
                                      placeholder:text-cobalt-300 focus:border-cobalt-500 focus:ring-2 focus:ring-cobalt-200 transition">{{ old('notes', $registration->notes) }}</textarea>
                 </div>
                 <div>
-                    <label for="ppdb_info_id" class="block text-sm font-semibold text-cobalt-700 mb-1.5">Tahun Ajaran PPDB</label>
+                    <label for="ppdb_info_id" class="block text-sm font-semibold text-cobalt-700 mb-1.5">Tahun Ajaran PPDB SMA SRK Deli Murni Delitua</label>
                     <select name="ppdb_info_id" id="ppdb_info_id"
                             class="w-full rounded-lg border px-4 py-2.5 text-sm border-slate-300 bg-white
                                    focus:border-cobalt-500 focus:ring-2 focus:ring-cobalt-200 transition">

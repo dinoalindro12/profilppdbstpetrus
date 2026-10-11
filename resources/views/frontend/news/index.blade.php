@@ -12,7 +12,7 @@
         <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-2">Kabar Sekolah</p>
         <h1 class="font-display text-display-lg text-white">Berita & Pengumuman</h1>
         <p class="text-cobalt-200 mt-3 text-base max-w-lg">
-            Kegiatan, prestasi, dan informasi penting dari SMAS St. Petrus Pontianak.
+            Kegiatan, prestasi, dan informasi penting dari SMAS RK Delimurni Delitua.
         </p>
     </div>
 </section>

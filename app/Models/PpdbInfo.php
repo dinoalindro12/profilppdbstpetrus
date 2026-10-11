@@ -36,4 +36,22 @@ class PpdbInfo extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public function scopeWithinRegistrationPeriod($query)
+    {
+        return $query->where('registration_end', '>=', now()->format('Y-m-d'));
+    }
+
+    public function scopeExpired($query)
+    {
+        return $query->where('registration_end', '<', now()->format('Y-m-d'));
+    }
+
+    // Auto-deactivate expired PPDB
+    public static function deactivateExpired()
+    {
+        return self::where('is_active', true)
+            ->where('registration_end', '<', now()->format('Y-m-d'))
+            ->update(['is_active' => false]);
+    }
 }

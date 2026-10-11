@@ -58,6 +58,6 @@ class PpdbRegistration extends Model
             $number = $lastNumber + 1;
         }
 
-        return 'PPDB' . $year . $month . str_pad($number, 4, '0', STR_PAD_LEFT);
+        return 'PPDBSMASRK' . $year . $month . str_pad($number, 4, '0', STR_PAD_LEFT);
     }
 }

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Informasi Pendaftaran PPDB - SMAS St. Petrus Medan')
+@section('title', 'Informasi Pendaftaran PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <section class="py-8 md:py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -14,7 +14,7 @@
                     </svg>
                     Penerimaan Peserta Didik Baru
                 </div>
-                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4">Informasi Pendaftaran PPDB</h1>
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4">Informasi Pendaftaran PPDB SMAS RK Deli Murni Delitua</h1>
                 <p class="text-lg md:text-xl text-gray-600">Tahun Ajaran 2024/2025</p>
             </div>
 
@@ -46,32 +46,23 @@
                                 </div>
                             </div>
                             <div>
-                                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1 md:mb-2">Salam Sejahtera, Calon Siswa SMAS St. Petrus Medan! 🎓</h2>
+                                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1 md:mb-2">Salam Sejahtera, Calon Siswa SMAS RK Deli Murni Delitua! 🎓</h2>
                                 <p class="text-blue-600 font-medium text-sm md:text-base">Selamat datang di keluarga besar kami</p>
                             </div>
                         </div>
 
                         <div class="prose prose-sm sm:prose-lg text-gray-600 space-y-3 md:space-y-4">
                             <p class="text-base md:text-lg leading-relaxed">
-                                Selamat datang di halaman informasi Penerimaan Peserta Didik Baru (PPDB) <strong class="text-blue-700">SMAS St. Petrus Medan</strong>. 
+                                Selamat datang di halaman informasi Penerimaan Peserta Didik Baru (PPDB) <strong class="text-blue-700">SMA SRK Deli Murni Delitua</strong>. 
                                 Kami mengucapkan terima kasih atas minat dan kepercayaan Anda untuk bergabung menjadi bagian dari keluarga besar sekolah kami.
                             </p>
                             <p class="text-base md:text-lg leading-relaxed">
                                 Sebagai langkah awal menuju pendidikan yang berkualitas, kami mengajak Anda untuk mempersiapkan diri dengan baik. 
-                                Mari kita wujudkan impian pendidikan terbaik bersama SMAS St. Petrus Medan.
+                                Mari kita wujudkan impian pendidikan terbaik bersama SMAS RK Delimurni Delitua.
                             </p>
                             
                             <!-- Quote dari Kepala Sekolah -->
-                            <div class="bg-blue-50 border-l-4 border-blue-500 pl-4 md:pl-6 py-3 md:py-4 mt-4 md:mt-6 rounded-r-lg">
-                                <p class="text-gray-700 italic text-sm md:text-base">
-                                    "Pendidikan adalah senjata paling ampuh untuk mengubah dunia. 
-                                    Mari bersama-sama kita raih masa depan gemilang di SMAS St. Petrus Medan."
-                                </p>
-                                <p class="text-xs md:text-sm text-gray-600 mt-1 md:mt-2 font-medium">
-                                    — Dr. Maria Sihombing, M.Pd.<br>
-                                    <span class="text-blue-600">Kepala Sekolah SMAS St. Petrus Medan</span>
-                                </p>
-                            </div>
+                            
                         </div>
 
                         <!-- Stats Mini -->
@@ -325,7 +316,7 @@
                         </div>
                         <div class="ml-3 md:ml-4 lg:ml-6 flex-1">
                             <h3 class="text-lg md:text-xl font-semibold text-gray-800 mb-1 md:mb-2">Verifikasi Berkas</h3>
-                            <p class="text-gray-600 text-sm md:text-base">Tim PPDB akan memverifikasi kelengkapan dan keabsahan dokumen</p>
+                            <p class="text-gray-600 text-sm md:text-base">Tim PPDB SMA SRK Deli Murni Delitua akan memverifikasi kelengkapan dan keabsahan dokumen</p>
                         </div>
                     </div>
 

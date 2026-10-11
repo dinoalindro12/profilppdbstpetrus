@@ -1,13 +1,13 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Form Pendaftaran PPDB - Sekolah Kita')
+@section('title', 'Form Pendaftaran PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <section class="py-16 bg-gray-50">
     <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-4">Form Pendaftaran PPDB</h1>
+                <h1 class="text-3xl font-bold text-gray-800 mb-4">Form Pendaftaran PPDB SMA SRK Deli Murni Delitua</h1>
                 <p class="text-gray-600">Isi form berikut dengan data yang benar dan lengkap.</p>
             </div>
 
@@ -211,9 +211,9 @@
                     <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 </div>
                 <h2 class="text-2xl font-bold text-yellow-800 mb-4">Pendaftaran Belum Dibuka</h2>
-                <p class="text-yellow-700 mb-6">Form pendaftaran PPDB saat ini tidak tersedia atau periode pendaftaran telah berakhir.</p>
+                <p class="text-yellow-700 mb-6">Form pendaftaran PPDB SMA SRK Deli Murni Delitua saat ini tidak tersedia atau periode pendaftaran telah berakhir.</p>
                 <a href="{{ route('ppdb.index') }}" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-lg font-medium">
-                    Kembali ke Info PPDB
+                    Kembali ke Info PPDB SMA SRK Deli Murni Delitua
                 </a>
             </div>
             @endif

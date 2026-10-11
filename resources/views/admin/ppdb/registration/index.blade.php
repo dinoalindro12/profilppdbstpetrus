@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Manajemen Pendaftaran PPDB')
+@section('title', 'Manajemen Pendaftaran PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Manajemen Pendaftaran PPDB</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Manajemen Pendaftaran PPDB SMA SRK Deli Murni Delitua</h2>
         <div class="flex items-center space-x-4">
             <div class="flex space-x-2">
                 <span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
@@ -155,7 +155,7 @@
                                 <svg class="w-12 h-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                                 </svg>
-                                <p class="text-sm">Belum ada data pendaftaran PPDB.</p>
+                                <p class="text-sm">Belum ada data pendaftaran PPDB SMA SRK Deli Murni Delitua.</p>
                             </div>
                         </td>
                     </tr>

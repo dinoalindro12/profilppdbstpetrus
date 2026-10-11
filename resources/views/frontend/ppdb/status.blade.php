@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Cek Status PPDB - Sekolah Kita')
+@section('title', 'Cek Status PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <section class="py-16 bg-gray-50">
@@ -63,7 +63,7 @@
                 <div class="mt-6 text-center">
                     <p class="text-gray-600">Belum mendaftar?</p>
                     <a href="{{ route('ppdb.form') }}" class="text-blue-600 hover:text-blue-800 font-medium">
-                        Daftar PPDB Sekarang
+                        Daftar PPDB SMA SRK Deli Murni Delitua Sekarang
                     </a>
                 </div>
             </div>

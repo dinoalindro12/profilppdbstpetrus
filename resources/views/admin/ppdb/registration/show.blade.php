@@ -1,11 +1,11 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Detail Pendaftaran PPDB')
+@section('title', 'Detail Pendaftaran PPDB SMA SRK Deli Murni Delitua')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Detail Pendaftaran PPDB</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Detail Pendaftaran PPDB SMA SRK Deli Murni Delitua</h2>
         <div class="flex space-x-4">
             <a href="{{ route('admin.ppdb.registration.index') }}" 
                class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-medium transition duration-200">

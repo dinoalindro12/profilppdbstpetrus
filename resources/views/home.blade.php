@@ -181,7 +181,7 @@
     <!-- Quick Info PPDB -->
     <section class="py-16 bg-blue-600 text-white">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Penerimaan Peserta Didik Baru (PPDB) 2023/2024</h2>
+            <h2 class="text-3xl font-bold mb-4">Penerimaan Peserta Didik Baru (PPDB) SMA SRK Deli Murni Delitua 2023/2024</h2>
             <p class="text-xl mb-8 max-w-2xl mx-auto">Daftarkan putra-putri Anda sekarang juga! Kuota terbatas.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">

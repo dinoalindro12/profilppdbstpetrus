@@ -12,33 +12,51 @@ class PpdbController extends Controller
 {
     public function index()
     {
+        // Only show active PPDB within registration period
         $info = PpdbInfo::where('is_active', true)
+            ->where('registration_end', '>=', now()->format('Y-m-d'))
             ->orderBy('academic_year', 'desc')
             ->get();
-        $activeInfo = PpdbInfo::where('is_active', true)->first();
+        
+        $activeInfo = PpdbInfo::where('is_active', true)
+            ->where('registration_end', '>=', now()->format('Y-m-d'))
+            ->first();
 
         return view('frontend.ppdb.index', compact('info', 'activeInfo'));
     }
 
     public function form()
     {
-        $activeInfo = PpdbInfo::active()->first();
+        $activeInfo = PpdbInfo::where('is_active', true)
+            ->where('registration_end', '>=', now()->format('Y-m-d'))
+            ->first();
+
+        if (!$activeInfo) {
+            return redirect()->route('ppdb.index')->with('error', 'Pendaftaran PPDB sedang tidak dibuka atau sudah ditutup.');
+        }
 
         return view('frontend.ppdb.form', compact('activeInfo'));
     }
 
     public function store(Request $request)
     {
-        $activeInfo = PpdbInfo::active()->first();
+        $activeInfo = PpdbInfo::where('is_active', true)
+            ->where('registration_end', '>=', now()->format('Y-m-d'))
+            ->first();
         
         if (!$activeInfo) {
-            return back()->with('error', 'Pendaftaran PPDB sedang tidak dibuka.');
+            return back()->with('error', 'Pendaftaran PPDB sedang tidak dibuka atau sudah ditutup.');
         }
 
         $request->validate([
             'full_name' => 'required|string|max:255',
             'birth_place' => 'required|string|max:255',
-            'birth_date' => 'required|date',
+            'birth_date' => [
+                'required',
+                'date',
+                'before_or_equal:' . now()->subYears(14)->format('Y-m-d'), // Minimal 14 tahun
+                'after_or_equal:' . now()->subYears(21)->format('Y-m-d'), // Maksimal 21 tahun
+            ],
             'gender' => 'required|in:L,P',
             'address' => 'required|string',
             'phone' => 'required|string|max:15',
@@ -51,6 +69,9 @@ class PpdbController extends Controller
             'birth_certificate' => 'required|file|mimes:pdf,jpeg,png,jpg|max:2048',
             'family_card' => 'required|file|mimes:pdf,jpeg,png,jpg|max:2048',
             'report_card' => 'required|file|mimes:pdf,jpeg,png,jpg|max:2048',
+        ], [
+            'birth_date.before_or_equal' => 'Usia minimal peserta didik adalah 14 tahun.',
+            'birth_date.after_or_equal' => 'Usia maksimal peserta didik adalah 21 tahun saat mendaftar.',
         ]);
 
         // Generate registration number
@@ -110,7 +131,11 @@ class PpdbController extends Controller
     }
     public function info(Request $request)
     {
-        $info = PpdbInfo::all();
+        // Only show active PPDB within registration period
+        $info = PpdbInfo::where('is_active', true)
+            ->where('registration_end', '>=', now()->format('Y-m-d'))
+            ->orderBy('academic_year', 'desc')
+            ->get();
         return view('frontend.ppdb.info', compact('info'));
     }
 }
