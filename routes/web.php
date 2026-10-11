@@ -64,6 +64,7 @@ Route::prefix('ppdb')->name('ppdb.')->group(function () {
     Route::post('/form', [FrontendPpdbController::class, 'store'])->name('store');   // Submit pendaftaran
     Route::get('/status', [FrontendPpdbController::class, 'status'])->name('status');
     Route::post('/status', [FrontendPpdbController::class, 'checkStatus'])->name('check-status');
+    Route::get('/download/{registrationNumber}', [FrontendPpdbController::class, 'downloadRegistrationCertificate'])->name('download-certificate');
 });
 
 // News Routes Frontend

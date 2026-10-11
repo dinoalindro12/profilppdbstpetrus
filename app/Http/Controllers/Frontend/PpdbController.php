@@ -129,4 +129,23 @@ class PpdbController extends Controller
 
         return view('frontend.ppdb.status-result', compact('registration'));
     }
+
+    public function downloadRegistrationCertificate($registrationNumber)
+    {
+        $registration = PpdbRegistration::where('registration_number', $registrationNumber)->first();
+
+        if (!$registration) {
+            return back()->with('error', 'Nomor pendaftaran tidak ditemukan.');
+        }
+
+        $data = [
+            'registration' => $registration,
+            'schoolName' => 'SMAS RK Delimurni Delitua',
+            'academicYear' => $registration->info->academic_year,
+            'downloadDate' => now()->format('d M Y H:i:s')
+        ];
+
+        $pdf = \PDF::loadView('frontend.ppdb.certificate', $data);
+        return $pdf->download('Bukti_Pendaftaran_' . $registrationNumber . '.pdf');
+    }
 }

@@ -16,11 +16,20 @@
                 <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
                     <div class="flex items-center">
                         <i class="fas fa-check-circle text-green-500 text-xl mr-3"></i>
-                        <div>
+                        <div class="flex-1">
                             <h4 class="font-semibold text-green-800">Pendaftaran Berhasil!</h4>
                             <p class="text-green-700">{{ session('success') }}</p>
                             @if(session('registration_number'))
                             <p class="text-green-700 font-bold mt-2">Nomor Pendaftaran: {{ session('registration_number') }}</p>
+                            <div class="mt-3 flex gap-2">
+                                <a href="{{ route('ppdb.download-certificate', session('registration_number')) }}" 
+                                   class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                    </svg>
+                                    Download Bukti Pendaftaran
+                                </a>
+                            </div>
                             @endif
                         </div>
                     </div>

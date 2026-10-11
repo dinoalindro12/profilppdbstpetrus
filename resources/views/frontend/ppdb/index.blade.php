@@ -147,74 +147,7 @@
     </div>
 
     <!-- Timeline Section -->
-    @if($activeInfo)
-    <div class="bg-white rounded-xl shadow-md p-6">
-        <h3 class="text-xl font-bold text-gray-800 mb-6">Timeline PPDB SMA SRK Deli Murni Delitua {{ $activeInfo->academic_year }}</h3>
-        <div class="relative">
-            <!-- Timeline Line -->
-            <div class="absolute left-4 top-0 h-full w-0.5 bg-blue-200"></div>
-            
-            <!-- Timeline Items -->
-            <div class="space-y-8">
-                <!-- Item 1: Registration Period -->
-                <div class="relative flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full 
-                        {{ now() >= $activeInfo->registration_start ? 'bg-blue-500' : 'bg-blue-200' }} 
-                        flex items-center justify-center">
-                        @if(now() > $activeInfo->registration_end)
-                        <i class="fas fa-check text-white text-sm"></i>
-                        @elseif(now() >= $activeInfo->registration_start)
-                        <i class="fas fa-spinner text-white text-sm"></i>
-                        @else
-                        <i class="fas fa-clock text-blue-500 text-sm"></i>
-                        @endif
-                    </div>
-                    <div class="ml-6">
-                        <h4 class="font-bold text-gray-800">Pendaftaran Online</h4>
-                        <p class="text-gray-600 mt-1">{{ $activeInfo->registration_start->format('d M Y') }} - {{ $activeInfo->registration_end->format('d M Y') }}</p>
-                        <p class="text-sm text-gray-500 mt-1">Pendaftaran dilakukan melalui website resmi sekolah</p>
-                    </div>
-                </div>
-                
-                <!-- Item 2: Verification -->
-                <div class="relative flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center">
-                        <i class="fas fa-clock text-blue-500 text-sm"></i>
-                    </div>
-                    <div class="ml-6">
-                        <h4 class="font-bold text-gray-800">Verifikasi Berkas</h4>
-                        <p class="text-gray-600 mt-1">1 - 5 Juli {{ $activeInfo->registration_end->format('Y') }}</p>
-                        <p class="text-sm text-gray-500 mt-1">Verifikasi dokumen dan kelengkapan berkas</p>
-                    </div>
-                </div>
-                
-                <!-- Item 3: Selection Test -->
-                <div class="relative flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center">
-                        <i class="fas fa-clock text-blue-500 text-sm"></i>
-                    </div>
-                    <div class="ml-6">
-                        <h4 class="font-bold text-gray-800">Tes Seleksi</h4>
-                        <p class="text-gray-600 mt-1">8 Juli {{ $activeInfo->registration_end->format('Y') }}</p>
-                        <p class="text-sm text-gray-500 mt-1">Tes tertulis dan wawancara</p>
-                    </div>
-                </div>
-                
-                <!-- Item 4: Announcement -->
-                <div class="relative flex items-start">
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-200 flex items-center justify-center">
-                        <i class="fas fa-clock text-blue-500 text-sm"></i>
-                    </div>
-                    <div class="ml-6">
-                        <h4 class="font-bold text-gray-800">Pengumuman Hasil</h4>
-                        <p class="text-gray-600 mt-1">15 Juli {{ $activeInfo->registration_end->format('Y') }}</p>
-                        <p class="text-sm text-gray-500 mt-1">Pengumuman melalui website dan papan pengumuman sekolah</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endif
+    
 </div>
 
 <!-- Font Awesome for Icons -->
