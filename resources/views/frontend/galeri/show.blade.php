@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('title', $galeri->title . ' — Galeri Alumni SMAS St. Petrus')
-@section('description', $galeri->deskripsi ?? 'Foto wisuda angkatan ' . $galeri->angkatan . ' SMAS St. Petrus Pontianak.')
+@section('title', $galeri->title . ' — Galeri Alumni SMAS RK Delimurni Delitua')
+@section('description', $galeri->deskripsi ?? 'Foto wisuda angkatan ' . $galeri->angkatan . ' SMAS RK Delimurni Delitua .')
 
 @section('content')
 

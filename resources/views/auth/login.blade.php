@@ -60,7 +60,7 @@
                 required
                 autofocus
                 autocomplete="username"
-                placeholder="nama@smastpetrus.sch.id"
+                placeholder="nama@smasrkdelimurni.sch.id"
                 class="w-full rounded-lg border px-4 py-2.5 text-sm text-ink
                        placeholder:text-cobalt-300
                        border-slate-300 bg-white

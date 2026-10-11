@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
-@section('title', 'Guru — SMAS St. Petrus')
-@section('description', 'Daftar tenaga pengajar profesional SMAS St. Petrus Pontianak.')
+@section('title', 'Guru — SMAS RK Delimurni Delitua')
+@section('description', 'Daftar tenaga pengajar profesional SMAS RK Delimurni Delitua.')
 
 @section('content')
 
@@ -16,7 +16,7 @@
         <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-2">Tenaga Pendidik</p>
         <h1 class="font-display text-display-lg text-white">Guru Kami</h1>
         <p class="text-cobalt-200 mt-3 text-base max-w-lg">
-            Para pendidik berdedikasi yang membimbing siswa SMAS St. Petrus setiap hari.
+            Para pendidik berdedikasi yang membimbing siswa SMAS RK Delimurni Delitua setiap hari.
         </p>
     </div>
 </section>

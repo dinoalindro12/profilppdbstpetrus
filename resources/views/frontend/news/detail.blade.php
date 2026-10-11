@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', $post->title . ' — SMAS St. Petrus')
+@section('title', $post->title . ' — Berita SMAS RK Delimurni Delitua')
 @section('description', $post->excerpt ?? Str::limit(strip_tags($post->content), 160))
 
 @section('content')
@@ -87,7 +87,7 @@
                 @endif
 
                 {{-- Konten utama --}}
-                <div class="prose-petrus max-w-none
+                <div class="prose-delimurni max-w-none
                             prose prose-headings:font-display prose-headings:text-cobalt-800
                             prose-a:text-cobalt-600 prose-a:underline prose-a:underline-offset-2
                             prose-strong:text-cobalt-800

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
-@section('title', 'Galeri Kegiatan — SMAS St. Petrus')
-@section('description', 'Dokumentasi foto kegiatan harian SMAS St. Petrus Pontianak.')
+@section('title', 'Galeri Kegiatan — SMAS RK Delimurni Delitua')
+@section('description', 'Dokumentasi foto kegiatan harian SMAS RK Delimurni Delitua.')
 
 @section('content')
 
@@ -10,7 +10,7 @@
         <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-2">Dokumentasi Sekolah</p>
         <h1 class="font-display text-display-lg text-white">Galeri Kegiatan</h1>
         <p class="text-cobalt-200 mt-3 text-base max-w-lg">
-            Foto-foto dokumentasi kegiatan harian, acara, dan momen penting di SMAS St. Petrus.
+            Foto-foto dokumentasi kegiatan harian, acara, dan momen penting di SMAS RK Delimurni Delitua
         </p>
     </div>
 </section>

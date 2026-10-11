@@ -1,5 +1,5 @@
 @extends('frontend.layouts.app')
-@section('title', $galeriKegiatan->judul . ' — Galeri SMAS St. Petrus')
+@section('title', $galeriKegiatan->judul . ' — Galeri SMAS RK Delimurni Delitua')
 
 @section('content')
 

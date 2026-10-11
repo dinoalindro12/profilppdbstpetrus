@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Galeri Alumni — SMAS St. Petrus')
-@section('description', 'Kumpulan foto wisuda dan kegiatan alumni SMAS St. Petrus Pontianak per angkatan.')
+@section('title', 'Galeri Alumni — SMAS RK Delimurni Delitua')
+@section('description', 'Kumpulan foto wisuda dan kegiatan alumni SMAS RK Delimurni Delitua Pontianak per angkatan.')
 
 @section('content')
 
@@ -12,7 +12,7 @@
         <p class="text-gold-400 text-sm font-semibold tracking-widest uppercase mb-2">Kenangan Bersama</p>
         <h1 class="font-display text-display-lg text-white">Galeri Alumni</h1>
         <p class="text-cobalt-200 mt-3 text-base max-w-lg">
-            Momen wisuda dan kegiatan para alumni SMAS St. Petrus dari setiap angkatan.
+            Momen wisuda dan kegiatan para alumni SMAS RK Delimurni Delitua dari setiap angkatan.
         </p>
     </div>
 </section>

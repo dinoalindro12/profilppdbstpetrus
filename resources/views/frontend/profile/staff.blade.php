@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
-@section('title', 'Staf Administrasi — SMAS St. Petrus')
-@section('description', 'Daftar staf administrasi dan pendukung SMAS St. Petrus Pontianak.')
+@section('title', 'Staf Administrasi — SMAS RK Delimurni Delitua')
+@section('description', 'Daftar staf administrasi dan pendukung SMAS RK Delimurni Delitua.')
 
 @section('content')
 

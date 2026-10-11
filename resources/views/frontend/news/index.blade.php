@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Berita & Pengumuman — SMAS St. Petrus')
-@section('description', 'Ikuti kabar terbaru dari SMAS St. Petrus Pontianak — kegiatan, prestasi, dan pengumuman sekolah.')
+@section('title', 'Berita & Pengumuman — SMAS RK Delimurni Delitua')
+@section('description', 'Ikuti kabar terbaru dari SMAS RK Delimurni Delitua — kegiatan, prestasi, dan pengumuman sekolah.')
 
 @section('content')
 

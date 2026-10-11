@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Galeri - SMAS St. Petrus')
+@section('title', 'Galeri - SMAS RK Delimurni Delitua')
 
 @section('content')
 <section class="py-16 bg-gray-50">
@@ -8,7 +8,7 @@
         <div class="text-center mb-12">
             <h1 class="text-3xl font-bold text-gray-800 mb-4">Galeri Sekolah</h1>
             <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Dokumentasi kegiatan dan momen berharga di SMAS St. Petrus
+                Dokumentasi kegiatan dan momen berharga di SMAS RK Delimurni Delitua
             </p>
         </div>
 
@@ -58,7 +58,7 @@
                         'title' => 'Juara Olimpiade Matematika',
                         'category' => 'prestasi',
                         'date' => '5 Maret 2024',
-                        'description' => 'Siswa SMAS St. Petrus meraih juara 1 Olimpiade Matematika Tingkat Kota'
+                        'description' => 'Siswa SMAS RK Delimurni Delitua meraih juara 1 Olimpiade Matematika Tingkat Kota'
                     ],
                     [
                         'id' => 4,

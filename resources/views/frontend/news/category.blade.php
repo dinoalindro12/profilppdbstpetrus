@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('title', $category->name . ' — Berita SMAS St. Petrus')
-@section('description', 'Kumpulan berita kategori ' . $category->name . ' dari SMAS St. Petrus Pontianak.')
+@section('title', $category->name . ' — Berita SMAS RK Delimurni Delitua')
+@section('description', 'Kumpulan berita kategori ' . $category->name . ' dari SMAS RK Delimurni Delitua')
 
 @section('content')
 
