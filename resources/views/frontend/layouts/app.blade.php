@@ -178,7 +178,6 @@
                          class="absolute top-full left-0 mt-1.5 w-48 sp-card py-1 z-50">
                         @foreach([
                             ['route' => 'ppdb.index', 'label' => 'Tentang PPDB'],
-                            ['route' => 'ppdb.info',  'label' => 'Informasi & Persyaratan'],
                             ['route' => 'ppdb.form',  'label' => 'Daftar Sekarang'],
                             ['route' => 'ppdb.status','label' => 'Cek Status Pendaftaran'],
                         ] as $item)
@@ -233,7 +232,7 @@
                 </a>
             </nav>
 
-            {{-- CTA masuk + hamburger --}}
+            {{-- CTA + hamburger --}}
             <div class="flex items-center gap-2">
                 @auth
                 <a href="{{ route(Auth::user()->dashboardRoute()) }}"
@@ -242,11 +241,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                     </svg>
                     Dashboard
-                </a>
-                @else
-                <a href="{{ route('login') }}"
-                   class="hidden lg:inline-flex items-center gap-1.5 text-sm font-semibold text-cobalt-600 hover:text-cobalt-800 transition-colors px-1">
-                    Masuk
                 </a>
                 @endauth
 
@@ -312,7 +306,6 @@
                 </button>
                 <div x-show="sub" class="pl-4 mt-1 space-y-0.5 border-l-2 border-gold-300 ml-3">
                     <a href="{{ route('ppdb.index') }}"  class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Tentang PPDB</a>
-                    <a href="{{ route('ppdb.info') }}"   class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Informasi & Persyaratan</a>
                     <a href="{{ route('ppdb.form') }}"   class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Daftar Sekarang</a>
                     <a href="{{ route('ppdb.status') }}" class="block py-2 px-3 text-sm text-cobalt-600 hover:text-cobalt-900">Cek Status Pendaftaran</a>
                 </div>

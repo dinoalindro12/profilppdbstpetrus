@@ -129,13 +129,4 @@ class PpdbController extends Controller
 
         return view('frontend.ppdb.status-result', compact('registration'));
     }
-    public function info(Request $request)
-    {
-        // Only show active PPDB within registration period
-        $info = PpdbInfo::where('is_active', true)
-            ->where('registration_end', '>=', now()->format('Y-m-d'))
-            ->orderBy('academic_year', 'desc')
-            ->get();
-        return view('frontend.ppdb.info', compact('info'));
-    }
 }

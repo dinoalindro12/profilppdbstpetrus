@@ -542,11 +542,6 @@
                 <a href="{{ route('ppdb.form') }}" class="btn-gold text-base py-3 px-7">
                     Isi Formulir Pendaftaran
                 </a>
-                <a href="{{ route('ppdb.info') }}"
-                   class="inline-flex items-center gap-2 text-base py-3 px-6 rounded-[6px] font-semibold
-                          text-white border border-white/30 hover:bg-white/10 transition-colors">
-                    Lihat persyaratan
-                </a>
             </div>
         </div>
     </div>
@@ -723,9 +718,9 @@
 
             {{-- Secondary actions --}}
             <div class="flex gap-2.5">
-                <a href="{{ route('ppdb.info') }}" @click="close()"
-                   class="btn-secondary flex-1 justify-center py-2.5 text-sm">
-                    Info & Syarat
+                <a href="{{ route('ppdb.form') }}" @click="close()"
+                   class="btn-primary flex-1 justify-center py-2.5 text-sm">
+                    Daftar Sekarang
                 </a>
                 <button @click="close()"
                         class="flex-1 py-2.5 text-sm font-semibold text-cobalt-400 hover:text-cobalt-600

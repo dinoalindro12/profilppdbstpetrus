@@ -60,7 +60,6 @@ Route::prefix('akademik')->name('academic.')->group(function () {
 // PPDB Routes Frontend
 Route::prefix('ppdb')->name('ppdb.')->group(function () {
     Route::get('/', [FrontendPpdbController::class, 'index'])->name('index');        // Tentang PPDB
-    Route::get('/info', [FrontendPpdbController::class, 'info'])->name('info');      // Informasi & Persyaratan
     Route::get('/form', [FrontendPpdbController::class, 'form'])->name('form');      // Form Pendaftaran
     Route::post('/form', [FrontendPpdbController::class, 'store'])->name('store');   // Submit pendaftaran
     Route::get('/status', [FrontendPpdbController::class, 'status'])->name('status');
