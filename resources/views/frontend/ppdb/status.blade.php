@@ -8,7 +8,7 @@
         <div class="max-w-2xl mx-auto">
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold text-gray-800 mb-4">Cek Status Pendaftaran</h1>
-                <p class="text-gray-600">Masukkan nomor pendaftaran Anda untuk melihat status.</p>
+                <p class="text-gray-600">Masukkan nomor pendaftaran Anda untuk melihat status. Jika dalam 3 hari status anda masi pending, maka anda dapat menghubungi admin untuk informasi lebih lanjut.</p>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6">

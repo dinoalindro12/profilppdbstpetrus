@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Daftarkan alias 'role' agar bisa dipakai di route ->middleware('role:...')
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'throttle' => \App\Http\Middleware\ThrottleRequests::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
